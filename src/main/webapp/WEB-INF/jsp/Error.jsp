@@ -8,7 +8,8 @@
 <head>
 <meta charset="utf-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="resources/css/NewSst.css">
+
+
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
 <fmt:message bundle="${loc}" key="local.name.site" var="name_site" />
@@ -48,6 +49,6 @@
 	</div>
 	<h1 class="headline"><c:out value="${error}"/></h1>
 	<p class="text"><c:out value="${error_message}"/></p>
-	<p class="text" style="font-size: 20px"><c:out value="${created}"/></p>
+	
 </body>
 </html>

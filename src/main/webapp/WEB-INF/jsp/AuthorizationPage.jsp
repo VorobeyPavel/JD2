@@ -8,7 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 
-<!-- <link rel="stylesheet" href="resources/css/NewSst.css"> -->
 
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
@@ -26,36 +25,6 @@
 <fmt:message bundle="${loc}" key="local.text.registration_message" var="registration_message"/>
 <fmt:message bundle="${loc}" key="local.text.user_not_found" var="user_not_found"/>
 
-<!-- <style>
-.form input {
-	font-family: "Roboto", sans-serif;
-	outline: 0;
-	background: #f2f2f2;
-	width: 100%;
-	border: 0;
-	margin: 0 0 15px;
-	padding: 15px;
-	box-sizing: border-box;
-	font-size: 14px;
-}
-
-.form {
-	position: relative;
-	z-index: 1;
-	background: #FFFFFF;
-	max-width: 360px;
-	margin: 0 auto 100px;
-	padding: 45px;
-	text-align: center;
-	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0
-		rgba(0, 0, 0, 0.24);
-}
-.form p {
-	color: grey;
-	margin: 0px 0px 10px 0px;
-	font-size: 12px;
-}
-</style> -->
 
 </head>
 <body>
@@ -109,6 +78,5 @@
 		</form>
 	</div>
 	
-	<%-- <p class="text" style="font-size: 20px"><c:out value="${created}"/></p> --%>
 </body>
 </html>

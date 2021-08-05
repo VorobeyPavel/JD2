@@ -24,7 +24,7 @@ public class SQLUserDAO implements UserDAO {
 	
 	public static final String URL = "jdbc:mysql://127.0.0.1/user_manag?useSSL=false";
 	public static final String LOGIN = "root";
-	public static final String PASSWORD = "***";
+	public static final String PASSWORD = "Pbg129634629937";
 	public static final String DRIVER_PATH = "org.gjt.mm.mysql.Driver";
 	
 	
@@ -34,7 +34,7 @@ public class SQLUserDAO implements UserDAO {
 	public User registration(RegistrationInfo info) throws DAOException {
 		
 		tableUsers();
-		// ѕроверка существует ли пользователь с данным Email в базе
+		// 
 		for(Map.Entry<Integer, User> mEntry : tableUsersMap.entrySet()) {
 			if(info.getEmail().equals(mEntry.getValue().getEmail())) {
 				return null;
@@ -75,7 +75,7 @@ public class SQLUserDAO implements UserDAO {
 		
 		tableUsers();
 		try {
-			// ѕровер€м в базе наличие данного user по логину и поролю
+			// 
 			for(Map.Entry<Integer, User> mEntry :tableUsersMap.entrySet()) {
 				if(info.getEmail().equals(mEntry.getValue().getEmail()) && info.getEnterPassword().equals(mEntry.getValue().getPassword())) {
 					return mEntry.getValue();	
