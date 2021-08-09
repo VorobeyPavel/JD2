@@ -75,6 +75,6 @@
 </table> --%>
 	
 
-	<%-- <p class="text" style="font-size: 20px"><c:out value="${created}"/></p> --%>
+	
 </body>
 </html>
