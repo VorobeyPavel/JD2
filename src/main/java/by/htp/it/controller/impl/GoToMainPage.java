@@ -28,7 +28,6 @@ public class GoToMainPage implements Command{
 		
 	}
 
-
 	public static GoToMainPage getInstance() {
 		return instance;
 	}

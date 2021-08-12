@@ -23,7 +23,6 @@ public class CommandProvider {
 		commands.put(CommandName.AUTHORIZATION_USER, AutorizationUser.getInstance());
 		commands.put(CommandName.UNKNOWN_COMMAND, UnknowCommand.getInstance());
 		commands.put(CommandName.GO_TO_MAIN_PAGE, GoToMainPage.getInstance());
-		commands.put(CommandName.AFTER_AUTHORIZATION, AfterAuthorization.getInstance());
 		commands.put(CommandName.CHANGE_LOCAL, ChangeLocal.getInstance());
 		
 	}

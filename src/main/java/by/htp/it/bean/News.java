@@ -1,6 +1,11 @@
 package by.htp.it.bean;
 
-public class News {
+import java.io.Serializable;
+import java.util.Objects;
+
+public class News implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 
 	private String title;
 	private String brief;
@@ -23,6 +28,24 @@ public class News {
 	}
 	public void setBrief(String brief) {
 		this.brief = brief;
+	}
+	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(brief, title);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		News other = (News) obj;
+		return Objects.equals(brief, other.brief) && Objects.equals(title, other.title);
 	}
 
 	@Override
