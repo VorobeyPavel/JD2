@@ -1,16 +1,10 @@
 package by.htp.it.servise.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import by.htp.it.bean.RegistrationInfo;
 import by.htp.it.bean.User;
 import by.htp.it.dao.DAOProvider;
 import by.htp.it.dao.UserDAO;
 import by.htp.it.dao.exception.DAOException;
-import by.htp.it.service.ServiceException;
 import by.htp.it.servise.UserServise;
 import by.htp.it.servise.exception.ServiseException;
 
@@ -74,19 +68,6 @@ public class UserServiseImpl implements UserServise {
 			throw new ServiseException();
 		}
 		
-	}
-
-
-	private static boolean checkEmail(String email) {
-		Pattern pattern = Pattern.compile(PATTERN_EMAIL);
-		Matcher matcher = pattern.matcher(email);
-		return matcher.matches();
-	}
-
-	private static boolean checkPassword(String password) {
-		Pattern pattern = Pattern.compile(PATTERN_PASSWORD);
-		Matcher matcher = pattern.matcher(password);
-		return matcher.matches();
 	}
 
 }
