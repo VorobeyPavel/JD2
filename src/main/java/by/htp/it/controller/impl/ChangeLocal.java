@@ -30,5 +30,4 @@ public class ChangeLocal implements Command {
 		response.sendRedirect(path);
 	
 	}
-
 }

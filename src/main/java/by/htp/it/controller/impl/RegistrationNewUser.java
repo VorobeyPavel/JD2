@@ -34,16 +34,14 @@ public class RegistrationNewUser implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		RegistrationInfo info = new RegistrationInfo(request);
-		
 		String path = PART_PATH + PATH_COMMAND_REG;
 		request.getSession(true).setAttribute(SESSION_PATH, PATH_COMMAND_REG);
 		
 		try {
-		
+			RegistrationInfo info = new RegistrationInfo(request);
 			String valid = USER_SERVISE.validation(info);
 			
-			if (!valid.equals("") || !(info.getEnterPassword().equals(info.getRepeatPassword()))) {
+			if (valid.equals("false")) {
 				path =  PART_PATH + PATH_COMMAND_REG + "&incorrect_data_message=Incorrect data was entered";
 				response.sendRedirect(path);
 				return;
