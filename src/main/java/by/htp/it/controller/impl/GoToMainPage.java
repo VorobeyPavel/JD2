@@ -21,16 +21,6 @@ public class GoToMainPage implements Command{
 	public static final String MAIN_PAGE = "/WEB-INF/jsp/main.jsp";
 	public static final String ERROR_PAGE = "Controller?command=UNKNOWN_COMMAND";
 	
-	
-	private static GoToMainPage instance = new GoToMainPage();
-	
-	private GoToMainPage() {
-		
-	}
-
-	public static GoToMainPage getInstance() {
-		return instance;
-	}
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

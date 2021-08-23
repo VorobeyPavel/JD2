@@ -24,12 +24,6 @@ public class RegistrationNewUser implements Command {
 	public static final String PATH_COMMAND_ERR = "UNKNOWN_COMMAND";
 	public static final String PATH_COMMAND_AUT = "AUTHORIZATION_PAGE";
 
-	private RegistrationNewUser() {
-	}
-
-	public static RegistrationNewUser getInstance() {
-		return instance;
-	}
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,8 +35,7 @@ public class RegistrationNewUser implements Command {
 			RegistrationInfo info = new RegistrationInfo(request);
 			String valid = USER_SERVISE.validation(info);
 			
-			System.out.println("Валидация выполнена");
-			
+						
 			if (valid.equals("false")) {
 				path =  PART_PATH + PATH_COMMAND_REG + "&incorrect_data_message=Incorrect data was entered";
 				response.sendRedirect(path);
@@ -53,7 +46,6 @@ public class RegistrationNewUser implements Command {
 			
 			User user = USER_SERVISE.registration(info);
 			
-			System.out.println("регистрация выполнена");
 			
 			if(user == null) {
 				path =  PART_PATH + PATH_COMMAND_REG + "&email_is_busy=The user with this Email is already registered";

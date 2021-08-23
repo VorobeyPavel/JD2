@@ -16,11 +16,6 @@ public class GoToRegistrationPage implements Command {
 	public static final String PATH_COMMAND_REG = "REGISTRATION_PAGE";
 	public static final String REGISTRATION_PAGE = "/WEB-INF/jsp/RegistrationPage.jsp";
 
-	private GoToRegistrationPage() {}
-
-	public static GoToRegistrationPage getInstance() {
-		return instance;
-	}
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -15,12 +15,6 @@ public class ChangeLocal implements Command {
 	public static final String SESSION_PATH = "path";
 	public static final String SESSION_LOCAL = "local";
 	public static final String PART_PATH = "Controller?command=";
-	
-	private ChangeLocal() {}
-
-	public static ChangeLocal getInstance() {
-		return instance;
-	}
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -24,14 +24,6 @@ public class AutorizationUser implements Command {
 	public static final String PATH_COMMAND_AUT = "AUTHORIZATION_PAGE";
 	public static final String PATH_COMMAND_ERR = "UNKNOWN_COMMAND";
 	public static final String PATH_COMMAND_AFT_AUT = "AFTER_AUTHORIZATION";
-	
-
-	private AutorizationUser() {
-	}
-
-	public static AutorizationUser getInstance() {
-		return instance;
-	}
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,9 +45,7 @@ public class AutorizationUser implements Command {
 			if (user == null) {
 				path =  PART_PATH + PATH_COMMAND_AUT + "&user_not_found=There is no such user";
 			} else {
-				
-				
-			
+							
 				request.getSession(true).setAttribute(SESSION_PATH, PATH_COMMAND_AFT_AUT);
 				request.getSession(true).setAttribute("user", user);
 				path = PART_PATH + PATH_COMMAND_AFT_AUT;

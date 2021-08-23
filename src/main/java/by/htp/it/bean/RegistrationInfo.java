@@ -13,6 +13,9 @@ public class RegistrationInfo {
 	private String surname;
 	private String role;
 		
+	public RegistrationInfo() {
+		super();
+	}
 	public RegistrationInfo(HttpServletRequest request) {
 		this.email = request.getParameter("email");
 		this.enter_password = request.getParameter("enter_password");

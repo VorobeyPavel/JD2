@@ -14,6 +14,10 @@ public class User implements Serializable {
 	private String password;
 	private String dateRegistration;
 
+	public User() {
+		super();
+	}
+
 	public User(String email, String password) {
 		super();
 		this.email = email;

@@ -15,11 +15,6 @@ public class GoToAuthorizationPage implements Command {
 	public static final String SESSION_PATH = "path";
 	public static final String SESSION_PATH_COMMAND = "AUTHORIZATION_PAGE";
 
-	public static GoToAuthorizationPage getInstance() {
-		return instance;
-	}
-	
-	private GoToAuthorizationPage() {}
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

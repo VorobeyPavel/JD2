@@ -15,7 +15,7 @@ public class SQLNewsDAO implements NewsDAO {
 		try {
 		List<News> requestedNews = new ArrayList<News>();
 		//
-		newses.add(new News("News 1", "We managed to bring out news No. 1"));
+		newses.add(new News("News 1", "news No. 1"));
 		
 		int totalNews = newses.size();
 		// 
