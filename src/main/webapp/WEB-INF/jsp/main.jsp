@@ -21,7 +21,6 @@
 <fmt:message bundle="${loc}" key="local.locbutton.name.login" var="Login_button"/>
 <fmt:message bundle="${loc}" key="local.locbutton.name.register" var="Register_button" />
 <fmt:message bundle="${loc}" key="local.text.welcom" var="welcom"/>	
-<fmt:message bundle="${loc}" key="local.text.created" var="created"/>	
 
 </head>
 <body>

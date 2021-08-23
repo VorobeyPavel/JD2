@@ -41,21 +41,28 @@ public class RegistrationNewUser implements Command {
 			RegistrationInfo info = new RegistrationInfo(request);
 			String valid = USER_SERVISE.validation(info);
 			
+			System.out.println("Валидация выполнена");
+			
 			if (valid.equals("false")) {
 				path =  PART_PATH + PATH_COMMAND_REG + "&incorrect_data_message=Incorrect data was entered";
 				response.sendRedirect(path);
 				return;
 			}
 			
+			System.out.println("Валидация прошла");
 			
 			User user = USER_SERVISE.registration(info);
+			
+			System.out.println("регистрация выполнена");
 			
 			if(user == null) {
 				path =  PART_PATH + PATH_COMMAND_REG + "&email_is_busy=The user with this Email is already registered";
 				response.sendRedirect(path);
 				return;
 			}
-					
+			
+			System.out.println("регистрация прошла");
+			
 			request.getSession(true).setAttribute(SESSION_PATH, PATH_COMMAND_AUT);
 			path = PART_PATH + PATH_COMMAND_AUT + "&registration_message=Congratulations on registering, please log in";
 

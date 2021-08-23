@@ -12,18 +12,17 @@
 
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
+
 <fmt:message bundle="${loc}" key="local.name.site" var="name_site"/>
 <fmt:message bundle="${loc}" key="local.locbutton.name.ru" var="ru_button"/>
 <fmt:message bundle="${loc}" key="local.locbutton.name.en" var="en_button" />
 <fmt:message bundle="${loc}" key="local.locbutton.name.register" var="Register_button" />
-<fmt:message bundle="${loc}" key="local.text.created" var="created"/>
 
 <fmt:message bundle="${loc}" key="local.user.name" var="name"/>
 <fmt:message bundle="${loc}" key="local.user.surname" var="surname"/>
 <fmt:message bundle="${loc}" key="local.user.email" var="email"/>
 <fmt:message bundle="${loc}" key="local.user.enter_password" var="enter_password"/>
 <fmt:message bundle="${loc}" key="local.user.repeat_password" var="repeat_password"/>
-
 
 <fmt:message bundle="${loc}" key="local.text.password_hint" var="password_hint"/>
 <fmt:message bundle="${loc}" key="local.text.incorrect_data" var="incorrect_data_message"/>
@@ -33,12 +32,10 @@
 </head>
 <body>
 		<div class="heading">
-
 		<h1 class=headline><c:out value="${name_site}" /></h1>
 
 		
 		<div class=heading-1>
-		
 		<!-- Кнопки RU EN -->
 		
 		<div class="heading-2">
@@ -72,7 +69,6 @@
 		
 		<form action="Controller" method="post">
 			<input type="hidden" name="command" value="Registration_new_user" />
-
 
 			<input type="text" name="name" placeholder="${name}" value="" /> 
 			<input type="text" name="surname" placeholder="${surname}" value="" />
