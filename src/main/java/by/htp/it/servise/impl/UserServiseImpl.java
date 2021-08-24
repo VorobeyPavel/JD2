@@ -21,7 +21,7 @@ public class UserServiseImpl implements UserServise {
 	public static final String PATTERN_PASSWORD = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}";
 	
 	@Override
-	public String validation(RegistrationInfo info) throws ServiseException {
+	public String validationReg(RegistrationInfo info) throws ServiseException {
 		
 		String validData="true";
 		
@@ -48,6 +48,24 @@ public class UserServiseImpl implements UserServise {
 		}
 		return validData;
 	}
+	
+	
+	@Override
+	public String validationAut(RegistrationInfo info) throws ServiseException {
+		
+		String validData="true";
+		String email = info.getEmail();
+		String enter_password = info.getEnterPassword();
+				
+		if (!email.matches(PATTERN_EMAIL)) {
+			validData = "false";
+		}
+		if (!enter_password.matches(PATTERN_PASSWORD)) {
+			validData = "false";
+		}
+		return validData;
+	}
+	
 
 	@Override
 	public User registration(RegistrationInfo info) throws ServiseException {
@@ -56,9 +74,9 @@ public class UserServiseImpl implements UserServise {
 		} catch (DAOException e) {
 			throw new ServiseException();
 		}
-
 	}
 
+	
 	@Override
 	public User authorization(RegistrationInfo info) throws ServiseException {
 	
@@ -66,8 +84,7 @@ public class UserServiseImpl implements UserServise {
 			return USER_DAO.authorization(info);
 		} catch (DAOException e) {
 			throw new ServiseException();
-		}
-		
+		}		
 	}
 
 }

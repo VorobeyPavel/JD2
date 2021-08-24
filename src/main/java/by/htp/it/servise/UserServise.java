@@ -10,7 +10,9 @@ public interface UserServise {
 
 	User registration(RegistrationInfo info) throws ServiseException;
 
-	String validation(RegistrationInfo info) throws ServiseException;
+	String validationReg(RegistrationInfo info) throws ServiseException;
+	
+	String validationAut(RegistrationInfo info) throws ServiseException;
 
 	User authorization(RegistrationInfo info) throws ServiseException;
 

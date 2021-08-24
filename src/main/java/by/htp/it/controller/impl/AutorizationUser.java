@@ -24,7 +24,14 @@ public class AutorizationUser implements Command {
 	public static final String PATH_COMMAND_AUT = "AUTHORIZATION_PAGE";
 	public static final String PATH_COMMAND_ERR = "UNKNOWN_COMMAND";
 	public static final String PATH_COMMAND_AFT_AUT = "AFTER_AUTHORIZATION";
-
+	
+	private AutorizationUser() {
+	}
+	
+	public static AutorizationUser getInstance() {
+		return instance;
+	}
+	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -33,13 +40,12 @@ public class AutorizationUser implements Command {
 		request.getSession(true).setAttribute(SESSION_PATH, PATH_COMMAND_AUT);	
 		
 		try {
-			String valid = USER_SERVISE.validation(info);
 			
-			if(!valid.equals("")) {
-				path = PART_PATH + PATH_COMMAND_AUT + "&incorrect_data_message=Incorrect data was entered:" + valid;
-				response.sendRedirect(path);
-				return;
-			}
+			String valid = USER_SERVISE.validationAut(info);
+			  
+			if(valid.equals("false")) { path = PART_PATH + PATH_COMMAND_AUT + "&incorrect_data_message=Incorrect data was entered:" + valid;
+			response.sendRedirect(path); return; }
+			 
 
 			User user = USER_SERVISE.authorization(info);
 			if (user == null) {

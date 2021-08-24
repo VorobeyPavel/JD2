@@ -7,6 +7,7 @@ import by.htp.it.controller.Command;
 import by.htp.it.servise.NewsServise;
 import by.htp.it.servise.ServiseProvider;
 import by.htp.it.servise.exception.ServiseException;
+import by.htp.it.controller.impl.GoToMainPage;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +22,14 @@ public class GoToMainPage implements Command{
 	public static final String MAIN_PAGE = "/WEB-INF/jsp/main.jsp";
 	public static final String ERROR_PAGE = "Controller?command=UNKNOWN_COMMAND";
 	
+	private GoToMainPage() {
+	}
+	
+	private static GoToMainPage instance = new GoToMainPage();
+	
+	public static GoToMainPage getInstance() {
+		return instance;
+	}
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

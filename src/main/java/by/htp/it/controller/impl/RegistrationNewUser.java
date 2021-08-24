@@ -8,6 +8,7 @@ import by.htp.it.controller.Command;
 import by.htp.it.servise.ServiseProvider;
 import by.htp.it.servise.UserServise;
 import by.htp.it.servise.exception.ServiseException;
+import by.htp.it.controller.impl.RegistrationNewUser;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +25,13 @@ public class RegistrationNewUser implements Command {
 	public static final String PATH_COMMAND_ERR = "UNKNOWN_COMMAND";
 	public static final String PATH_COMMAND_AUT = "AUTHORIZATION_PAGE";
 
+	private RegistrationNewUser() {
+	}
 
+	public static RegistrationNewUser getInstance() {
+		return instance;
+	}
+	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -33,7 +40,7 @@ public class RegistrationNewUser implements Command {
 		
 		try {
 			RegistrationInfo info = new RegistrationInfo(request);
-			String valid = USER_SERVISE.validation(info);
+			String valid = USER_SERVISE.validationReg(info);
 			
 						
 			if (valid.equals("false")) {

@@ -7,11 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import by.htp.it.bean.RegistrationInfo;
@@ -77,8 +74,7 @@ public class SQLUserDAO implements UserDAO {
 			// 
 			for(Map.Entry<Integer, User> mEntry :tableUsersMap.entrySet()) {
 				if(info.getEmail().equals(mEntry.getValue().getEmail()) && info.getEnterPassword().equals(mEntry.getValue().getPassword())) {
-					return mEntry.getValue();	
-					
+					return mEntry.getValue();						
 				}
 			}
 		} catch (Exception e) {

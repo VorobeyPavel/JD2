@@ -3,7 +3,7 @@ package by.htp.it.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-
+import by.htp.it.controller.impl.AfterAuthorization;
 import by.htp.it.controller.impl.AutorizationUser;
 import by.htp.it.controller.impl.ChangeLocal;
 import by.htp.it.controller.impl.GoToAuthorizationPage;
@@ -23,6 +23,7 @@ public class CommandProvider {
 		commands.put(CommandName.AUTHORIZATION_USER, AutorizationUser.getInstance());
 		commands.put(CommandName.UNKNOWN_COMMAND, UnknowCommand.getInstance());
 		commands.put(CommandName.GO_TO_MAIN_PAGE, GoToMainPage.getInstance());
+		commands.put(CommandName.AFTER_AUTHORIZATION, AfterAuthorization.getInstance());
 		commands.put(CommandName.CHANGE_LOCAL, ChangeLocal.getInstance());
 		
 	}

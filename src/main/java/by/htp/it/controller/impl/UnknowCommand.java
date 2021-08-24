@@ -3,6 +3,7 @@ package by.htp.it.controller.impl;
 import java.io.IOException;
 
 import by.htp.it.controller.Command;
+import by.htp.it.controller.impl.UnknowCommand;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +16,13 @@ public class UnknowCommand implements Command {
 	public static final String SESSION_PATH = "path";
 	public static final String PATH_COMMAND_ERR = "UNKNOWN_COMMAND";
 	public static final String ERROR_PAGE = "/WEB-INF/jsp/Error.jsp";
+	
+	private UnknowCommand() {
+	}
 
+	public static UnknowCommand getInstance() {
+		return instance;
+	}
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

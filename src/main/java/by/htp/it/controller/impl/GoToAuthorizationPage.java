@@ -3,6 +3,7 @@ package by.htp.it.controller.impl;
 import java.io.IOException;
 
 import by.htp.it.controller.Command;
+import by.htp.it.controller.impl.GoToAuthorizationPage;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +16,12 @@ public class GoToAuthorizationPage implements Command {
 	public static final String SESSION_PATH = "path";
 	public static final String SESSION_PATH_COMMAND = "AUTHORIZATION_PAGE";
 
-
+	public static GoToAuthorizationPage getInstance() {
+		return instance;
+	}
+	
+	private GoToAuthorizationPage() {}
+	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		

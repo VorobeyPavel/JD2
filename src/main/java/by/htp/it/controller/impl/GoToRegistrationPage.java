@@ -3,6 +3,7 @@ package by.htp.it.controller.impl;
 import java.io.IOException;
 
 import by.htp.it.controller.Command;
+import by.htp.it.controller.impl.GoToRegistrationPage;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +17,12 @@ public class GoToRegistrationPage implements Command {
 	public static final String PATH_COMMAND_REG = "REGISTRATION_PAGE";
 	public static final String REGISTRATION_PAGE = "/WEB-INF/jsp/RegistrationPage.jsp";
 
+	private GoToRegistrationPage() {}
 
+	public static GoToRegistrationPage getInstance() {
+		return instance;
+	}
+	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		

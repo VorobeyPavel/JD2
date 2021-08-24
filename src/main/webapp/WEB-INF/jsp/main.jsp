@@ -61,17 +61,17 @@
 	</div>
 	
 	<p class="text"><c:out value="${welcom}"/></p>
-	<!-- <HR WIDTH="90%" ALIGN="center" SIZE="2"> -->
+	<HR WIDTH="90%" ALIGN="center" SIZE="2">
 
 	<!-- Здесь начинается вывод новостей -->
 
-	<%-- <table class="text" align="center">
+	<table class="text" align="center">
    		 <c:forEach  items="${newses}" var="clip" >
    		    <tr><td> <c:out value="${clip.getTitle()}"/> </td></tr>
     	    <tr><td> <c:out value="${clip.getBrief()}"/>
      	   <HR WIDTH="90%" ALIGN="center" SIZE="2"> </td></tr> 
  	   </c:forEach>
-</table> --%>
+</table>
 	
 	
 </body>
