@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <title>Insert title here</title>
 
-<!-- <link rel="stylesheet" href="resources/css/NewSst.css"> -->
+<!-- <link rel="stylesheet" href="resources/Newss.css"> -->
 
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
@@ -21,6 +21,7 @@
 <fmt:message bundle="${loc}" key="local.locbutton.name.login" var="Login_button"/>
 <fmt:message bundle="${loc}" key="local.locbutton.name.register" var="Register_button" />
 <fmt:message bundle="${loc}" key="local.text.welcom" var="welcom"/>	
+<fmt:message bundle="${loc}" key="local.text.after_aut" var="after_aut"/>	
 
 </head>
 <body>
@@ -61,18 +62,18 @@
 	</div>
 	
 	<p class="text"><c:out value="${welcom}"/></p>
+	<p class="text"><c:out value="${after_aut}"/></p>
 	<HR WIDTH="90%" ALIGN="center" SIZE="2">
 
 	<!-- Здесь начинается вывод новостей -->
 
-	<table class="text" align="center">
+	<%-- <table class="text" align="center">
    		 <c:forEach  items="${newses}" var="clip" >
    		    <tr><td> <c:out value="${clip.getTitle()}"/> </td></tr>
     	    <tr><td> <c:out value="${clip.getBrief()}"/>
      	   <HR WIDTH="90%" ALIGN="center" SIZE="2"> </td></tr> 
- 	   </c:forEach>
-</table>
-	
-	
+ 	   	</c:forEach>
+	</table> --%>
+		
 </body>
 </html>

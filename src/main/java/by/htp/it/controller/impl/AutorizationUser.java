@@ -43,8 +43,11 @@ public class AutorizationUser implements Command {
 			
 			String valid = USER_SERVISE.validationAut(info);
 			  
-			if(valid.equals("false")) { path = PART_PATH + PATH_COMMAND_AUT + "&incorrect_data_message=Incorrect data was entered:" + valid;
-			response.sendRedirect(path); return; }
+			if(valid.equals("false")) { 
+				path = PART_PATH + PATH_COMMAND_AUT + "&incorrect_data_message=Incorrect data was entered:" + valid;
+				response.sendRedirect(path); 
+				return; 
+			}
 			 
 
 			User user = USER_SERVISE.authorization(info);

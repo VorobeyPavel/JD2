@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
+<!-- <link rel="stylesheet" href="resources/Newss.css"> -->
 
 
 <fmt:setLocale value="${sessionScope.local}" />
@@ -16,7 +17,6 @@
 <fmt:message bundle="${loc}" key="local.locbutton.name.ru" var="ru_button"/>
 <fmt:message bundle="${loc}" key="local.locbutton.name.en" var="en_button" />
 <fmt:message bundle="${loc}" key="local.locbutton.name.login" var="Login_button" />
-<fmt:message bundle="${loc}" key="local.text.created" var="created"/>
 
 <fmt:message bundle="${loc}" key="local.user.email" var="email"/>
 <fmt:message bundle="${loc}" key="local.user.enter_password" var="enter_password"/>

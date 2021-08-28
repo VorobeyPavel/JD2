@@ -14,14 +14,22 @@ import java.util.Map;
 import by.htp.it.bean.RegistrationInfo;
 import by.htp.it.bean.User;
 import by.htp.it.dao.UserDAO;
+import by.htp.it.dao.cp.ConnectionPool;
+import by.htp.it.dao.exception.ConnectionPoolException;
 import by.htp.it.dao.exception.DAOException;
 
 public class SQLUserDAO implements UserDAO {
 	
-	public static final String URL = "jdbc:mysql://127.0.0.1/my_news?useSSL=false";
-	public static final String LOGIN = "root";
-	public static final String PASSWORD = "Pbg129634629937";
-	public static final String DRIVER_PATH = "org.gjt.mm.mysql.Driver";
+	/*
+	 * public static final String URL =
+	 * "jdbc:mysql://127.0.0.1/my_news?useSSL=false"; public static final String
+	 * LOGIN = "root"; public static final String PASSWORD = "Pbg129634629937";
+	 * public static final String DRIVER_PATH = "org.gjt.mm.mysql.Driver";
+	 */
+	
+	private static final ConnectionPool CONN_POOL = ConnectionPool.getInstance();
+	public static final String INSERT_INTO_USERS = "INSERT INTO users(name,surname,email,password,Date) VALUES(?,?,?,?,?)";
+	public static final String SELECT_FROM_USER = "SELECT * FROM users";
 	
 	
 	static Map <Integer, User> tableUsersMap = new HashMap<Integer, User>();
@@ -30,24 +38,17 @@ public class SQLUserDAO implements UserDAO {
 	public User registration(RegistrationInfo info) throws DAOException {
 		
 		tableUsers();		
-		System.out.println("регистрация после tableUsers()");
-		
+		System.out.println("регистрация после tableUsers()");		
 		// 
 		for(Map.Entry<Integer, User> mEntry : tableUsersMap.entrySet()) {
 			if(info.getEmail().equals(mEntry.getValue().getEmail())) {
 				return null;
 			}
 		}
-		
-		try { 
-			Class.forName(DRIVER_PATH);
-		} catch (ClassNotFoundException e1) {
-			throw new DAOException();
-		}
-		
-		try(Connection con = DriverManager.getConnection(URL, LOGIN, PASSWORD);) {
+				
+		try(Connection con = CONN_POOL.takeConnection()) {
 			
-			String sql = "INSERT INTO users(name,surname,email,password,Date) VALUES(?,?,?,?,?)";
+			String sql = INSERT_INTO_USERS;
 			PreparedStatement ps = con.prepareStatement(sql);
 			Date date = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -63,8 +64,11 @@ public class SQLUserDAO implements UserDAO {
 			
 		} catch (SQLException e1) {
 			throw new DAOException();
+		} catch (ConnectionPoolException e) {
+			throw new DAOException(e);
 		}		
 	}
+	
 
 	@Override
 	public User authorization(RegistrationInfo info) throws DAOException {
@@ -85,33 +89,24 @@ public class SQLUserDAO implements UserDAO {
 	}
 
 	
-	private static void tableUsers() throws DAOException {
-						
-		try {
-			Class.forName(DRIVER_PATH);
-		} catch (ClassNotFoundException e) {
-			throw new DAOException();
-		}
-		
-		System.out.println("после Class.forName(DRIVER_PATH);");
+	private static void tableUsers() throws DAOException{						
 	    
-		try (Connection con = DriverManager.getConnection(URL, LOGIN, PASSWORD)){
+		try (Connection con = CONN_POOL.takeConnection()){
 		Statement st = con.createStatement();
-	    ResultSet rs = st.executeQuery("SELECT * FROM users");
-	    
-	    System.out.println("перед while");
+	    ResultSet rs = st.executeQuery(SELECT_FROM_USER);	    
 
 	    while (rs.next()) {
 	    	tableUsersMap.put(rs.getInt(1), new User(rs.getString(2), rs.getString(3) ,rs.getString(4), rs.getString(5), rs.getString(6)));
 	    }
-
 	    	rs.close();
 		    st.close();
-		    	    
+		    		    	    
 	    } catch (SQLException e) {
-	    	throw new DAOException();
-		}
-			    
+	    	throw new DAOException(e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException(e);
+		} 
+				    
 	}
 
 }

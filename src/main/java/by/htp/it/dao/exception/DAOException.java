@@ -3,7 +3,7 @@ package by.htp.it.dao.exception;
 public class DAOException extends Exception {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	public DAOException() {
 		super();
 	}
@@ -19,4 +19,5 @@ public class DAOException extends Exception {
 	public DAOException(String message, Exception e) {
 		super(message, e);
 	}
+
 }

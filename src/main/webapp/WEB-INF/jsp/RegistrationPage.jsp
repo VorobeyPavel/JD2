@@ -8,6 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
+<!-- <link rel="stylesheet" href="resources/Newss.css"> -->
 
 
 <fmt:setLocale value="${sessionScope.local}" />
