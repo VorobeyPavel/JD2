@@ -48,6 +48,13 @@
 					<input type="submit" class="button_local" value="${exit_button}" /><br />
 				</form>
 				
+				<form action="Controller" method="post">
+						<input type="hidden" name="id" value="${oneNews.id}" /> <input
+							type="hidden" name="title" value="${oneNews.title}" /> <input
+							type="hidden" name="command" value="read_news" /> <input
+							type="submit" value="read" />
+					</form>
+				
 			</div>
 		</div>
 	</div>

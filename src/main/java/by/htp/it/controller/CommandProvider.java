@@ -11,6 +11,7 @@ import by.htp.it.controller.impl.Exit;
 import by.htp.it.controller.impl.GoToAuthorizationPage;
 import by.htp.it.controller.impl.GoToMainPage;
 import by.htp.it.controller.impl.GoToRegistrationPage;
+import by.htp.it.controller.impl.ReadNews;
 import by.htp.it.controller.impl.RegistrationNewUser;
 import by.htp.it.controller.impl.UnknowCommand;
 
@@ -29,6 +30,7 @@ public class CommandProvider {
 		commands.put(CommandName.CHANGE_LOCAL, ChangeLocal.getInstance());
 		commands.put(CommandName.ADD_NEWS, AddNews.getInstance());
 		commands.put(CommandName.EXIT, Exit.getInstance());
+		commands.put(CommandName.READ_NEWS, ReadNews.getInstance());
 		
 		
 	}

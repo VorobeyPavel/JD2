@@ -7,5 +7,13 @@ import by.htp.it.dao.exception.DAOException;
 
 public interface NewsDAO {
 	
-	List<News> addNewses(int quantity) throws DAOException;
+	List<News> getNewses(int quantity) throws DAOException;
+	
+	News read(News news) throws DAOException;
+	
+	void add(News news) throws DAOException;
+	
+	void update(News news) throws DAOException;
+	
+	void delete(News news) throws DAOException;
 }

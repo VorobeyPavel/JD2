@@ -2,7 +2,10 @@ package by.htp.it.controller.impl;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import by.htp.it.bean.News;
 import by.htp.it.controller.Command;
 import by.htp.it.servise.NewsServise;
 import by.htp.it.servise.ServiseProvider;
@@ -33,9 +36,11 @@ public class GoToMainPage implements Command{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//List<News> newses = new ArrayList<News>();
 					
 		try {
-			request.setAttribute("newses", NEWS_SERVISE.addNewses(10));
+			request.setAttribute("newses", NEWS_SERVISE.getNewses(10));
 		} catch (ServiseException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();

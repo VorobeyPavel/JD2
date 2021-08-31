@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class RegistrationNewUser implements Command {
 
 	private static final RegistrationNewUser instance = new RegistrationNewUser();
+	
 	private static final ServiseProvider PROVIDER = ServiseProvider.getInstance();
 	private static final UserServise USER_SERVISE = PROVIDER.getUserServise();
 	public static final String SESSION_PATH = "path";
@@ -41,26 +42,20 @@ public class RegistrationNewUser implements Command {
 		try {
 			RegistrationInfo info = new RegistrationInfo(request);
 			String valid = USER_SERVISE.validationReg(info);
-			
-						
+									
 			if (valid.equals("false")) {
 				path =  PART_PATH + PATH_COMMAND_REG + "&incorrect_data_message=Incorrect data was entered";
 				response.sendRedirect(path);
 				return;
 			}
-			
-			System.out.println("Валидация прошла");
-			
+						
 			User user = USER_SERVISE.registration(info);
-			
-			
+						
 			if(user == null) {
 				path =  PART_PATH + PATH_COMMAND_REG + "&email_is_busy=The user with this Email is already registered";
 				response.sendRedirect(path);
 				return;
-			}
-			
-			System.out.println("регистрация прошла");
+			}			
 			
 			request.getSession(true).setAttribute(SESSION_PATH, PATH_COMMAND_AUT);
 			path = PART_PATH + PATH_COMMAND_AUT + "&registration_message=Congratulations on registering, please log in";

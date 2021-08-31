@@ -11,6 +11,7 @@ public enum CommandName {
 	AFTER_AUTHORIZATION,
 	CHANGE_LOCAL,
 	ADD_NEWS,
-	EXIT
+	EXIT,
+	READ_NEWS
 	
 }

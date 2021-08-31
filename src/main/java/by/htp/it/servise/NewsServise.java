@@ -7,6 +7,13 @@ import by.htp.it.servise.exception.ServiseException;
 
 public interface NewsServise {
 
-	List<News> addNewses(int quantity) throws ServiseException;
+	List<News> getNewses(int quantity) throws ServiseException;
+	
+	void add(News news) throws ServiceException;
 
+	void update(News news) throws ServiceException;
+	
+	void delete (News news) throws ServiceException;
+	
+	News read (News news) throws ServiceException;
 }

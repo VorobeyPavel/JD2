@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <title>Insert title here</title>
 
-<!-- <link rel="stylesheet" href="resources/Newss.css"> -->
+<link rel="stylesheet" href="resources/news.css">
 
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
@@ -64,16 +64,56 @@
 	<p class="text"><c:out value="${welcom}"/></p>
 	<p class="text"><c:out value="${after_aut}"/></p>
 	<HR WIDTH="90%" ALIGN="center" SIZE="2">
+	
 
 	<!-- Здесь начинается вывод новостей -->
 
-	<%-- <table class="text" align="center">
+<%-- 	<table class="text" align="center">
    		 <c:forEach  items="${newses}" var="clip" >
    		    <tr><td> <c:out value="${clip.getTitle()}"/> </td></tr>
     	    <tr><td> <c:out value="${clip.getBrief()}"/>
      	   <HR WIDTH="90%" ALIGN="center" SIZE="2"> </td></tr> 
  	   	</c:forEach>
 	</table> --%>
+	
+	<table>
+		<tr>
+			<th>id</th>
+			<th>title</th>
+			<th>brief</th>
+			<th>action</th>
+		</tr>
+
+		<c:forEach var="oneNews" items="${newses}">
+			<tr>
+				<td>${oneNews.id}</td>
+				<td>${oneNews.title}</td>
+				<td>${oneNews.brief}</td>
+				<td>
+
+					<form action="Controller" method="post">
+						<input type="hidden" name="id" value="${oneNews.id}" /> <input
+							type="hidden" name="title" value="${oneNews.title}" /> <input
+							type="hidden" name="command" value="read_news" /> <input
+							type="submit" value="read" />
+					</form>
+
+					<form action="Controller" method="post">
+						<input type="hidden" name="id" value="${oneNews.id}" /> <input
+							type="hidden" name="command" value="GO_TO_EDIT_NEWS_PAGE" /> <input
+							type="submit" value="edit" />
+					</form>
+
+					<form action="Controller" method="post">
+						<input type="hidden" name="id" value="${oneNews.id}" /> <input
+							type="hidden" name="command" value="delete_news" /> <input
+							type="submit" value="delete" />
+					</form>
+				</td>
+
+			</tr>
+		</c:forEach>
+	</table>
 		
 </body>
 </html>

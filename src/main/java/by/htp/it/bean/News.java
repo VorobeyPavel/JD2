@@ -19,6 +19,27 @@ public class News implements Serializable{
 	public News() {
 		super();
 	}
+	
+	
+	public News(int id) {
+		super();
+		this.id = id;
+	}
+
+	
+	public News(String content) {
+		super();
+		this.content = content;
+	}
+	
+
+	public News(int id, String title, String brief) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.brief = brief;
+	}
+
 
 	public News(String title, String brief) {
 		super();

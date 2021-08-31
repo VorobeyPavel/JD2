@@ -2,6 +2,7 @@ package by.htp.it.dao.impl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,11 +25,13 @@ public class SQLNewsDAO implements NewsDAO {
 	
 	private static final ConnectionPool CONN_POOL = ConnectionPool.getInstance();
 	public static final String SELECT_FROM_NEWS = "SELECT * FROM news";
+	public static final String READ_NEWS_SELECT = "SELECT * FROM news WHERE id = ?";
+	public static final String EMPTY_CONTENT = "";
 	
 	static List<News> newses = new ArrayList<News>();
 
 	@Override
-	public List<News> addNewses(int quantity) throws DAOException {
+	public List<News> getNewses(int quantity) throws DAOException {
 		try {
 		
 		List<News> requestedNews = new ArrayList<News>();
@@ -59,7 +62,7 @@ public class SQLNewsDAO implements NewsDAO {
 	    ResultSet rs = st.executeQuery(SELECT_FROM_NEWS);
 	    
 	    while (rs.next()) {
-	    	newses.add(new News(rs.getString(2), rs.getString(3))); 
+	    	newses.add(new News(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3))); 
 	    }
 	    	rs.close();
 		    st.close();
@@ -70,6 +73,80 @@ public class SQLNewsDAO implements NewsDAO {
 			throw new DAOException(e);
 		}
 			    
+	}
+
+
+	@Override
+	public News read(News news) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		String sql = READ_NEWS_SELECT;
+		String content = EMPTY_CONTENT;
+
+		try {
+
+			con = CONN_POOL.takeConnection();
+
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, news.getId());
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				content = rs.getString(4);
+
+			}
+		} catch (SQLException e) {
+			// log
+			throw new DAOException(e);
+		} catch (ConnectionPoolException e) {
+			// log
+			throw new DAOException(e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (ps != null) {
+					ps.close();
+				}
+
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				// log
+				throw new DAOException(e);
+			}
+		}
+
+		News newsForReading = new News(content);
+		return newsForReading;
+	}
+
+
+	@Override
+	public void add(News news) throws DAOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void update(News news) throws DAOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void delete(News news) throws DAOException {
+		// TODO Auto-generated method stub
+		
 	}
 		
 }

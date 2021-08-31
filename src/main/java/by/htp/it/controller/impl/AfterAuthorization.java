@@ -40,7 +40,7 @@ public class AfterAuthorization implements Command{
 		HttpSession session = request.getSession(false);
 		
 		try {
-			request.setAttribute("newses", NEWS_SERVISE.addNewses(10));
+			request.setAttribute("newses", NEWS_SERVISE.getNewses(10));
 		} catch (ServiseException e) {
 			e.printStackTrace();
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(ERROR_PAGE);
