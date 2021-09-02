@@ -10,30 +10,41 @@
 <meta charset="utf-8">
 <title>Read news</title>
 
-<link rel="stylesheet" href="resources/news.css">
+<!-- <link rel="stylesheet" href="resources/news.css"> -->
 
 </head>
 <body>
-	<%-- <h1>
+
+
+	<h1>
 		<c:out value="${requestScope.title}" />
 	</h1>
 	<h2>
 		<c:out value="${requestScope.content}" />
 	</h2>
+	
+	
+	
+	<%-- <h1>
+		<c:out value="${applicationScope.title}" />
+	</h1>
+	<h2>
+		<c:out value="${applicationScope.content}" />
+	</h2> --%>
 
 	<form action="Controller" method="post">
 		<input type="hidden" name="id" value="${oneNews.id}" /> <input
 			type="hidden" name="command" value="add_to_favourites" /> <input
 			type="submit" value="Add to favourites">
-	</form> --%>
+	</form>
 	
-	<table class="text" align="center">
+	<%-- <table class="text" align="center">
    		 <c:forEach  items="${newses}" var="clip" >
    		    <tr><td> <c:out value="${clip.getTitle()}"/> </td></tr>
     	    <tr><td> <c:out value="${clip.getContent()}"/>
      	   <HR WIDTH="90%" ALIGN="center" SIZE="2"> </td></tr> 
  	   	</c:forEach>
-	</table>
+	</table> --%>
 	
 	
 	

@@ -15,6 +15,7 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class GoToMainPage implements Command{
 	
@@ -38,17 +39,20 @@ public class GoToMainPage implements Command{
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//List<News> newses = new ArrayList<News>();
+		HttpSession session = request.getSession(true);
 					
 		try {
-			request.setAttribute("newses", NEWS_SERVISE.getNewses(10));
+			
+			session.setAttribute("newses", NEWS_SERVISE.getNewses(10));
+			//request.setAttribute("newses", NEWS_SERVISE.getNewses(10));
 		} catch (ServiseException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(ERROR_PAGE);
 			requestDispatcher.forward(request, response);
 		}
 		
-		request.getSession(true).setAttribute(SESSION_PATH, PATH_COMMAND_MAIN);		
+		request.getSession(true).setAttribute(SESSION_PATH, PATH_COMMAND_MAIN);
+		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(MAIN_PAGE);
 		requestDispatcher.forward(request, response);
 		

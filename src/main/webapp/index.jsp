@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <title>Insert title here</title>
 
-<link rel="stylesheet" href="resources/News.css">
+<link rel="stylesheet" href="resources/news.css">
 
 </head>
 <body>

@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <title>Insert title here</title>
 
-<link rel="stylesheet" href="resources/news.css">
+<!-- <link rel="stylesheet" href="resources/news.css"> -->
 
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
@@ -76,7 +76,7 @@
  	   	</c:forEach>
 	</table> --%>
 	
-	<table>
+	<%-- <table>
 		<tr>
 			<th>id</th>
 			<th>title</th>
@@ -113,7 +113,7 @@
 
 			</tr>
 		</c:forEach>
-	</table>
+	</table> --%>
 		
 </body>
 </html>
