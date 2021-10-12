@@ -23,7 +23,7 @@ public class SQLNewsDAO implements NewsDAO {
 	
 	private static final ConnectionPool CONN_POOL = ConnectionPool.getInstance();
 	
-	public static final String ADD_NEWS_INSERT_INTO = "INSERT INTO news_my(title,brief,content,date,id_user,status) VALUES(?,?,?,?,?,?)";
+	public static final String ADD_NEWS_INSERT_INTO = "INSERT INTO news_my(title,brief,content,date,id_user) VALUES(?,?,?,?,?)";
 	public static final String UPDATE_NEWS = "UPDATE news_my SET title = ?, brief = ?, content = ? WHERE id = ?";
 	public static final String DELETE_NEWS_ID = "DELETE FROM news_my WHERE id = ?";
 	public static final String SELECT_FROM_NEWS = "SELECT * FROM news_my";
@@ -44,7 +44,7 @@ public class SQLNewsDAO implements NewsDAO {
 	public static final String COMMA = " ,";
 	
 	static List<News> newses = new ArrayList<News>();
-	
+
 	@Override
 	public List<News> getNewses(int quantity) throws DAOException {
 		try {
@@ -54,11 +54,11 @@ public class SQLNewsDAO implements NewsDAO {
 			tableNewses();
 
 			int totalNews = newses.size();
-			
+
 			if (quantity > totalNews) {
 				quantity = totalNews;
 			}
-			
+
 			for (int i = 0; i < quantity; i++) {
 				requestedNews.add(newses.get(i));
 			}
@@ -150,7 +150,6 @@ public class SQLNewsDAO implements NewsDAO {
 			ps.setString(3, news.getContent());
 			ps.setDate(4, Date.valueOf(LocalDate.now()));
 			ps.setInt(5, news.getIdUser());
-			ps.setString(6, "published");
 			ps.executeUpdate();
 
 		} catch (SQLException | ConnectionPoolException e) {

@@ -17,6 +17,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="footer">© Pavel Vorobey, 2021</div>
+	<div class="footer"><!-- © Pavel Vorobey, 2021 --></div>
 </body>
 </html>
