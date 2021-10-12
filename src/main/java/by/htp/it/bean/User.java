@@ -7,6 +7,7 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private int id;
 	private String name;
 	private String surname;
 	private String email;
@@ -17,6 +18,18 @@ public class User implements Serializable {
 	public User() {
 		super();
 	}
+
+	public User(int id, String name, String role) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.role = role;
+	}
+
+	/*
+	 * public User(int id, String name, String password) { super(); this.id = id;
+	 * this.name = name; this.password = password; }
+	 */
 
 	public User(String email, String password) {
 		super();
@@ -38,6 +51,25 @@ public class User implements Serializable {
 		this.password = password;
 		this.dateRegistration = date;
 	}
+	
+
+	public User(String name, String surname, String email, String password, String dateRegistration, String role) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.password = password;
+		this.dateRegistration = dateRegistration;
+		this.role = role;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -45,14 +77,6 @@ public class User implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getSurname() {
@@ -79,6 +103,14 @@ public class User implements Serializable {
 		this.role = role;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getDateRegistration() {
 		return dateRegistration;
 	}
@@ -89,7 +121,7 @@ public class User implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dateRegistration, email, name, password, role, surname);
+		return Objects.hash(dateRegistration, email, id, name, password, role, surname);
 	}
 
 	@Override
@@ -102,14 +134,14 @@ public class User implements Serializable {
 			return false;
 		User other = (User) obj;
 		return Objects.equals(dateRegistration, other.dateRegistration) && Objects.equals(email, other.email)
-				&& Objects.equals(name, other.name) && Objects.equals(password, other.password)
+				&& id == other.id && Objects.equals(name, other.name) && Objects.equals(password, other.password)
 				&& Objects.equals(role, other.role) && Objects.equals(surname, other.surname);
 	}
 
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", surname=" + surname + ", email=" + email + ", role=" + role + ", password="
-				+ password + ", dateRegistration=" + dateRegistration + "]";
+		return "User [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", role=" + role
+				+ ", password=" + password + ", dateRegistration=" + dateRegistration + "]";
 	}
 
 }

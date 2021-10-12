@@ -58,8 +58,12 @@
 
 				</form>
 			</div>
+			
+		
 		</div>
 	</div>
+	
+	
 	
 	<p class="text"><c:out value="${welcom}"/></p>
 	<p class="text"><c:out value="${after_aut}"/></p>

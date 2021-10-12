@@ -5,12 +5,11 @@ import java.io.IOException;
 import by.htp.it.bean.RegistrationInfo;
 import by.htp.it.bean.User;
 import by.htp.it.controller.Command;
-import by.htp.it.servise.ServiseProvider;
-import by.htp.it.servise.UserServise;
-import by.htp.it.servise.exception.ServiseException;
+import by.htp.it.serviсe.ServiсeProvider;
+import by.htp.it.serviсe.UserServiсe;
+import by.htp.it.serviсe.exception.ServiceException;
 import by.htp.it.controller.impl.RegistrationNewUser;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -18,8 +17,8 @@ public class RegistrationNewUser implements Command {
 
 	private static final RegistrationNewUser instance = new RegistrationNewUser();
 	
-	private static final ServiseProvider PROVIDER = ServiseProvider.getInstance();
-	private static final UserServise USER_SERVISE = PROVIDER.getUserServise();
+	private static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
+	private static final UserServiсe USER_SERVISE = PROVIDER.getUserServise();
 	public static final String SESSION_PATH = "path";
 	public static final String PART_PATH = "Controller?command=";
 	public static final String PATH_COMMAND_REG = "REGISTRATION_PAGE";
@@ -60,7 +59,7 @@ public class RegistrationNewUser implements Command {
 			request.getSession(true).setAttribute(SESSION_PATH, PATH_COMMAND_AUT);
 			path = PART_PATH + PATH_COMMAND_AUT + "&registration_message=Congratulations on registering, please log in";
 
-		} catch (ServiseException e) {
+		} catch (ServiceException e) {
 			e.printStackTrace();
 			request.getSession(true).setAttribute(SESSION_PATH, PATH_COMMAND_ERR);
 			path = PART_PATH + PATH_COMMAND_ERR;

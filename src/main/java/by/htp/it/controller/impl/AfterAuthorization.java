@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import by.htp.it.bean.User;
 import by.htp.it.controller.Command;
-import by.htp.it.servise.NewsServise;
-import by.htp.it.servise.ServiseProvider;
-import by.htp.it.servise.exception.ServiseException;
+import by.htp.it.serviсe.NewsServiсe;
+import by.htp.it.serviсe.ServiсeProvider;
+import by.htp.it.serviсe.exception.ServiceException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,8 +17,8 @@ public class AfterAuthorization implements Command{
 	
 	private static AfterAuthorization instance = new AfterAuthorization();
 	
-	public static final ServiseProvider PROVIDER = ServiseProvider.getInstance();
-	public static final NewsServise NEWS_SERVISE = PROVIDER.getNewsServise();
+	public static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
+	public static final NewsServiсe NEWS_SERVISE = PROVIDER.getNewsServise();
 	public static final String ERROR_PAGE = "Controller?command=UNKNOWN_COMMAND";
 	
 	public static final String SESSION_PATH = "path";
@@ -40,8 +40,8 @@ public class AfterAuthorization implements Command{
 		HttpSession session = request.getSession(false);
 		
 		try {
-			request.setAttribute("newses", NEWS_SERVISE.getNewses(10));
-		} catch (ServiseException e) {
+			request.setAttribute("newses", NEWS_SERVISE.getNewses(5));
+		} catch (ServiceException e) {
 			e.printStackTrace();
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(ERROR_PAGE);
 			requestDispatcher.forward(request, response);
@@ -58,6 +58,18 @@ public class AfterAuthorization implements Command{
 			response.sendRedirect(PART_PATH + AUTHORIZATION_PAGE);
 			return;
 		}
+		
+		System.out.println(user.toString()+"AfterAuthorization");
+		System.out.println(user.getRole());
+		
+		if(user!=null) {
+			if(!user.getRole().toString().equals("admin")) {
+				user.setRole("user");
+			}
+		}
+		
+		System.out.println(user.toString()+"AfterAuthorization2");
+		
 		request.getSession(true).setAttribute(SESSION_PATH, SESSION_PATH_COMMAND);
 		request.setAttribute("role", user.getRole());
 		
