@@ -4,6 +4,7 @@ import java.util.List;
 
 import by.htp.it.bean.Comment;
 import by.htp.it.bean.News;
+import by.htp.it.bean.User;
 import by.htp.it.dao.exception.DAOException;
 
 public interface NewsDAO {
@@ -28,9 +29,9 @@ public interface NewsDAO {
 	
 	void addComment(Comment comment) throws DAOException;
 	
-	List<News> viewFavoriteNews(int idUser) throws DAOException;
+	List<News> viewFavoriteNews( User user) throws DAOException;
 	
-	List<News> viewMyOfferedNews(int idUser) throws DAOException;
+	List<News> viewMyOfferedNews(User user) throws DAOException;
 	
 	List<News> viewOfferedNews() throws DAOException;
 	
@@ -43,4 +44,6 @@ public interface NewsDAO {
 	News checkOfferedNews(News news) throws DAOException;
 
 	void goToPublish(News newsApprovePublication) throws DAOException;
+	
+	void offerNews(News offeredNews) throws DAOException;
 }

@@ -37,7 +37,7 @@
 	<h2>Favorite news</h2>
 
 	<c:choose>
-		<c:when test="${not empty news}">
+		<c:when test="${not empty favoriteNews}">
 			<table>
 				<tr>
 					<th>id</th>
@@ -46,7 +46,7 @@
 					<th>action</th>
 				</tr>
 
-				<c:forEach var="oneNews" items="${news}">
+				<c:forEach var="oneNews" items="${favoriteNews}">
 					<tr>
 						<td>${oneNews.id}</td>
 						<td>${oneNews.title}</td>
@@ -67,13 +67,17 @@
 									<input type="submit" value="edit" />
 								</form>
 							</div> --%>
+							
+							<c:if test="${user.role == 'admin'}">
 							<div class="buttonSignUp">
 								<form action="Controller" method="post">
 									<input type="hidden" name="idNews" value="${oneNews.id}" /> <input
-										type="hidden" name="command" value="delete_news" /> <input
+										type="hidden" name="command" value="delete_from_favorites" /> <input
 										type="submit" value="delete" />
 								</form>
 							</div>
+							</c:if>
+							
 						</td>
 
 					</tr>

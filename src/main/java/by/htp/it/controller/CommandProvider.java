@@ -25,6 +25,7 @@ import by.htp.it.controller.impl.GoToMainPage;
 import by.htp.it.controller.impl.GoToOfferNewsPage;
 import by.htp.it.controller.impl.GoToPublish;
 import by.htp.it.controller.impl.GoToRegistrationPage;
+import by.htp.it.controller.impl.OfferNews;
 import by.htp.it.controller.impl.OpenProfile;
 import by.htp.it.controller.impl.ReadAllNews;
 import by.htp.it.controller.impl.ReadNews;
@@ -70,6 +71,8 @@ public class CommandProvider {
 		commands.put(CommandName.GO_TO_PUBLISH, GoToPublish.getInstance());
 		commands.put(CommandName.GO_TO_CHECK_OFFERED_NEWS_PAGE, GoToCheckOfferedNewsPage.getInstance() );
 		commands.put(CommandName.DO_NOT_PUBLISH, DoNotPublish.getInstance() );
+		commands.put(CommandName.OFFER_NEWS, OfferNews.getInstance());
+		
 		
 	}
 

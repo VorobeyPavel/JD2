@@ -16,7 +16,7 @@
 <body>
 
 	<form action="Controller" method="post">
-		<input type="hidden" name="command" value="AFTER_AUTHORIZATION" /> <input
+		<input type="hidden" name="command" value="after_authorization" /> <input
 			type="submit" value="На главную" />
 	</form>
 	

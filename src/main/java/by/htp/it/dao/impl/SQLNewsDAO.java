@@ -14,6 +14,7 @@ import java.util.List;
 import by.htp.it.bean.Comment;
 import by.htp.it.bean.News;
 import by.htp.it.bean.NewsStatus;
+import by.htp.it.bean.User;
 import by.htp.it.dao.NewsDAO;
 import by.htp.it.dao.cp.ConnectionPool;
 import by.htp.it.dao.exception.ConnectionPoolException;
@@ -23,7 +24,8 @@ public class SQLNewsDAO implements NewsDAO {
 	
 	private static final ConnectionPool CONN_POOL = ConnectionPool.getInstance();
 	
-	public static final String ADD_NEWS_INSERT_INTO = "INSERT INTO news_my(title,brief,content,date,id_user) VALUES(?,?,?,?,?)";
+	public static final String ADD_NEWS_INSERT_INTO = "INSERT INTO news_my(title,brief,content,date,id_user,status) VALUES(?,?,?,?,?,?)";
+	public static final String OFFER_NEWS_INSERT_INTO = "INSERT INTO news_my(title,brief,content,date,id_user,status) VALUES(?,?,?,?,?,?)";
 	public static final String UPDATE_NEWS = "UPDATE news_my SET title = ?, brief = ?, content = ? WHERE id = ?";
 	public static final String DELETE_NEWS_ID = "DELETE FROM news_my WHERE id = ?";
 	public static final String SELECT_FROM_NEWS = "SELECT * FROM news_my";
@@ -36,9 +38,12 @@ public class SQLNewsDAO implements NewsDAO {
 	public static final String ADD_COMMENT_INSERT_INTO = "INSERT INTO comments(id_news,id_user,comment,date) VALUES(?,?,?,?)";
 	public static final String DENY_TO_PUBLISH = "UPDATE news_my SET status = 'denied_publication' WHERE id = ?";
 	public static final String APPROVE_PUBLICATION = "UPDATE news_my SET status = 'published' WHERE id = ?";
-	public static final String LIST_OF_FAVORITE_NEWS = "SELECT * FROM news, favourite_news WHERE favourite_news.id_user = ? AND news.id=favourite_news.idfavourite_news";
+	public static final String LIST_OF_FAVORITE_NEWS = "SELECT * FROM news_my, favourite_news WHERE favourite_news.id_user = ? AND news_my.id=favourite_news.idfavourite_news";
+	//public static final String LIST_OF_FAVORITE_NEWS = "SELECT * FROM news, favourite_news WHERE favourite_news.id_user = ? AND news.id=favourite_news.idfavourite_news";
+	//public static final String LIST_OF_FAVORITE_NEWS = "SELECT news.* FROM news, favourite_news WHERE favourite_news.id_user = ? AND news.id=favourite_news.idfavourite_news";
+	//public static final String LIST_OF_FAVORITE_NEWS = "SELECT news.* FROM news_my, favourite_news WHERE favourite_news.id_user = ? AND favourite_news.idfavourite_news=news.id";
 	public static final String LIST_OF_OFFERED_NEWS = "SELECT * FROM news_my WHERE status IN('on_approval','ON_APPROVAL')";
-	public static final String LIST_OF_USER_OFFERED_NEWS = "SELECT * FROM news WHERE id_user = ?";
+	public static final String LIST_OF_USER_OFFERED_NEWS = "SELECT * FROM news_my WHERE id_user = ?";
 	public static final String LIST_OF_ALL_NEWS_SELECT = "SELECT * FROM news_my WHERE status = 'published' LIMIT ";
 	public static final String COUNT_AMOUNT_OF_ALL_NEWS = "SELECT * FROM news_my WHERE status = 'published'";
 	public static final String COMMA = " ,";
@@ -150,6 +155,8 @@ public class SQLNewsDAO implements NewsDAO {
 			ps.setString(3, news.getContent());
 			ps.setDate(4, Date.valueOf(LocalDate.now()));
 			ps.setInt(5, news.getIdUser());
+			//ps.setString(6, "published");
+			ps.setString(6, NewsStatus.PUBLISHED.toString());
 			ps.executeUpdate();
 
 		} catch (SQLException | ConnectionPoolException e) {
@@ -422,18 +429,18 @@ public class SQLNewsDAO implements NewsDAO {
 
 
 	@Override
-	public List<News> viewFavoriteNews(int idUser) throws DAOException {
+	public List<News> viewFavoriteNews(User user) throws DAOException {
+		
+		System.out.println("DAO начало");
+		
 		List<News> listOfFavoriteNews = new ArrayList<>();
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		try (Connection con = CONN_POOL.takeConnection();
+				PreparedStatement ps = con.prepareStatement(LIST_OF_FAVORITE_NEWS)) {
 
-		try {
-			con = CONN_POOL.takeConnection();
-			ps = con.prepareStatement(LIST_OF_FAVORITE_NEWS);
-			ps.setInt(1, idUser);
-			rs = ps.executeQuery();
+			ps.setInt(1, user.getId());
+
+			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
 				int id = rs.getInt(1);
@@ -444,26 +451,10 @@ public class SQLNewsDAO implements NewsDAO {
 				listOfFavoriteNews.add(news);
 
 			}
-		} catch (SQLException e) {
-			// log
+
+		} catch (SQLException | ConnectionPoolException e) {
+
 			throw new DAOException(e);
-		} catch (ConnectionPoolException e) {
-			// log
-			throw new DAOException(e);
-
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (ps != null) {
-					ps.close();
-				}
-
-			} catch (SQLException e) {
-				throw new DAOException(e);
-
-			}
 		}
 
 		return listOfFavoriteNews;
@@ -471,25 +462,22 @@ public class SQLNewsDAO implements NewsDAO {
 
 
 	@Override
-	public List<News> viewMyOfferedNews(int idUser) throws DAOException {
+	public List<News> viewMyOfferedNews(User user) throws DAOException {
+		
 		List<News> listOfOfferedNews = new ArrayList<>();
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		try (Connection con = CONN_POOL.takeConnection();
+				PreparedStatement ps = con.prepareStatement(LIST_OF_USER_OFFERED_NEWS)) {
 
-		try {
+			ps.setInt(1, user.getId());
 
-			con = CONN_POOL.takeConnection();
-			ps = con.prepareStatement(LIST_OF_USER_OFFERED_NEWS);
-			ps.setInt(1, idUser);
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
 
 				int idOfferedNews = rs.getInt(1);
-				String title = rs.getString(3);
-				String brief = rs.getString(4);
+				String title = rs.getString(2);
+				String brief = rs.getString(3);
 				String status = rs.getString(7);
 
 				status = status.toUpperCase();
@@ -498,26 +486,11 @@ public class SQLNewsDAO implements NewsDAO {
 				listOfOfferedNews.add(news);
 
 			}
-		} catch (SQLException e) {
-			// log
-			throw new DAOException(e);
-		} catch (ConnectionPoolException e) {
-			// log
+
+		} catch (SQLException | ConnectionPoolException e) {
+
 			throw new DAOException(e);
 
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (ps != null) {
-					ps.close();
-				}
-
-			} catch (SQLException e) {
-				throw new DAOException(e);
-
-			}
 		}
 
 		return listOfOfferedNews;
@@ -566,27 +539,23 @@ public class SQLNewsDAO implements NewsDAO {
 
 		String query = LIST_OF_ALL_NEWS_SELECT + startFrom + COMMA + limitRecords;
 
-		try (Connection con = CONN_POOL.takeConnection()) {
+		try (Connection con = CONN_POOL.takeConnection();
+				PreparedStatement ps = con.prepareStatement(query);
+				ResultSet rs = ps.executeQuery()) {
 
-			try (PreparedStatement ps = con.prepareStatement(query)) {
+			while (rs.next()) {
 
-				try (ResultSet rs = ps.executeQuery()) {
+				int id = rs.getInt(1);
+				String title = rs.getString(2);
+				String brief = rs.getString(3);
 
-					while (rs.next()) {
+				News news = new News(id, title, brief);
+				listOfLimitAmountOfNews.add(news);
 
-						int id = rs.getInt(1);
-						String title = rs.getString(2);
-						String brief = rs.getString(3);
-
-						News news = new News(id, title, brief);
-						listOfLimitAmountOfNews.add(news);
-
-					}
-				}
 			}
 
 		} catch (SQLException | ConnectionPoolException e) {
-			// log
+
 			throw new DAOException(e);
 		}
 
@@ -689,6 +658,28 @@ public class SQLNewsDAO implements NewsDAO {
 			// log
 			throw new DAOException(e);
 
+		}
+		
+	}
+
+
+	@Override
+	public void offerNews(News offeredNews) throws DAOException {
+		
+		try (Connection con = CONN_POOL.takeConnection();
+				PreparedStatement ps = con.prepareStatement(OFFER_NEWS_INSERT_INTO)) {
+
+			ps.setString(1, offeredNews.getTitle());
+			ps.setString(2, offeredNews.getBrief());
+			ps.setString(3, offeredNews.getContent());
+			ps.setDate(4, Date.valueOf(LocalDate.now()));
+			ps.setInt(5, offeredNews.getIdUser());
+			ps.setString(6, NewsStatus.ON_APPROVAL.toString());
+			ps.executeUpdate();
+
+		} catch (SQLException | ConnectionPoolException e) {
+
+			throw new DAOException(e);
 		}
 		
 	}

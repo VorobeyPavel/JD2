@@ -129,6 +129,8 @@
 								type="submit" class="button_local" value="${read}" />
 						</form>
 					</div>
+					
+					<c:if test="${user.role == 'admin'}">
 					<div class="buttonSignUp">
 						<form action="Controller" method="post">
 							<input type="hidden" name="idNews" value="${oneNews.id}" /> <input
@@ -143,6 +145,7 @@
 								type="submit" class="button_local" value="${delete}" />
 						</form>
 					</div>
+					</c:if>
 				</td>
 
 			</tr>

@@ -5,6 +5,7 @@ import java.util.List;
 
 import by.htp.it.bean.Comment;
 import by.htp.it.bean.News;
+import by.htp.it.bean.User;
 import by.htp.it.dao.DAOProvider;
 import by.htp.it.dao.NewsDAO;
 import by.htp.it.dao.exception.DAOException;
@@ -135,10 +136,13 @@ public class NewsServiсeImpl implements NewsServiсe {
 	}
 
 	@Override
-	public List<News> viewFavoriteNews(int idUser) throws ServiceException {
+	public List<News> viewFavoriteNews(User user) throws ServiceException {
+		
+		System.out.println("NEWS_SERVISE.IMPL");
+		
 		List<News> listOfFavoriteNews = new ArrayList<>();
 		try {
-			listOfFavoriteNews = NEWS_DAO.viewFavoriteNews(idUser);
+			listOfFavoriteNews = NEWS_DAO.viewFavoriteNews(user);
 		} catch (DAOException e) {
 			// log
 			throw new ServiceException();
@@ -148,10 +152,10 @@ public class NewsServiсeImpl implements NewsServiсe {
 	}
 
 	@Override
-	public List<News> viewMyOfferedNews(int idUser) throws ServiceException {
+	public List<News> viewMyOfferedNews(User user) throws ServiceException {
 		List<News> listOfOfferedNews = new ArrayList<>();
 		try {
-			listOfOfferedNews = NEWS_DAO.viewMyOfferedNews(idUser);
+			listOfOfferedNews = NEWS_DAO.viewMyOfferedNews(user);
 		} catch (DAOException e) {
 			// log
 			throw new ServiceException();
@@ -232,6 +236,18 @@ public class NewsServiсeImpl implements NewsServiсe {
 		
 		try {
 			NEWS_DAO.goToPublish(newsApprovePublication);
+		} catch (DAOException e) {
+			// log
+			throw new ServiceException(e);
+		}
+		
+	}
+
+	@Override
+	public void offerNews(News offeredNews) throws ServiceException {
+		
+		try {
+			NEWS_DAO.offerNews(offeredNews);
 		} catch (DAOException e) {
 			// log
 			throw new ServiceException(e);

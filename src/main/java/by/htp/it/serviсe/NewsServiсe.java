@@ -4,6 +4,7 @@ import java.util.List;
 
 import by.htp.it.bean.Comment;
 import by.htp.it.bean.News;
+import by.htp.it.bean.User;
 import by.htp.it.serviсe.exception.ServiceException;
 
 
@@ -29,9 +30,9 @@ public interface NewsServiсe {
 	
 	void addComment(Comment comment) throws ServiceException;
 	
-	List<News> viewFavoriteNews(int idUser) throws ServiceException;
+	List<News> viewFavoriteNews(User user) throws ServiceException;
 	
-	List<News> viewMyOfferedNews(int idUser) throws ServiceException;
+	List<News> viewMyOfferedNews(User user) throws ServiceException;
 	
 	List<News> viewOfferedNews() throws ServiceException;
 	
@@ -44,4 +45,6 @@ public interface NewsServiсe {
 	News checkOfferedNews(News news) throws ServiceException;
 
 	void goToPublish(News newsApprovePublication) throws ServiceException;
+	
+	void offerNews(News offeredNews) throws ServiceException;
 }

@@ -62,7 +62,7 @@ public class ViewOfferedNews implements Command {
 			return;
 		}
 		
-		
+		System.out.println("ViewOfferedNews после преверки роли" );
 		
 		try {
 
