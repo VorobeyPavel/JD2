@@ -3,6 +3,9 @@ package by.htp.it.controller.impl;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.htp.it.bean.Comment;
 import by.htp.it.bean.News;
 import by.htp.it.bean.User;
@@ -23,6 +26,7 @@ public class ReadNews implements Command {
 	public static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
 	public static final NewsServiсe NEWS_SERVISE = PROVIDER.getNewsServise();
 	
+	private static final Logger log = LogManager.getLogger(ReadNews.class);
 
 	public static final String READ_NEWS_PAGE = "/WEB-INF/jsp/readNews.jsp";
 	public static final String PATH_AFTER_ERROR_NO_SESSION_NO_USER_NO_RIGHTS = "Controller?command=Go_To_Authorization_Page&messageErrorNews=Please, log in.";
@@ -35,6 +39,7 @@ public class ReadNews implements Command {
 	public static final String SESSION_ATTRIBUTE_USER_ID = "idUser";
 	public static final String REQUEST_ATTR_COMMENTS = "comments";
 	public static final String IS_FAVOURITE = "isFavourite";
+	public static final String PATH_AFTER_EXCEPTION = "Controller?command=Go_To_Main_Page&responseCommandServiceException=Something went wrong... Try again later.";
 	
 	private ReadNews() {}
 
@@ -97,7 +102,8 @@ public class ReadNews implements Command {
 			requestDispatcher.forward(request, response);
 
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			log.error("Database error during getting the news for reading.", e);
+			response.sendRedirect(PATH_AFTER_EXCEPTION);
 		}
 
 	}

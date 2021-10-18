@@ -2,6 +2,10 @@ package by.htp.it.controller.impl;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 import by.htp.it.bean.News;
 import by.htp.it.bean.User;
 import by.htp.it.controller.Command;
@@ -18,6 +22,12 @@ public class AddNews implements Command{
 	
 	private static AddNews instance = new AddNews();
 	
+	public static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
+	public static final NewsServiсe NEWS_SERVISE = PROVIDER.getNewsServise();
+	public static final String ERROR_PAGE = "Controller?command=UNKNOWN_COMMAND";		
+	
+	private static final Logger log = LogManager.getLogger(AddNews.class);
+	
 	public static final String REQUEST_PARAM_TITLE = "title";
 	public static final String REQUEST_PARAM_BRIEF = "brief";
 	public static final String REQUEST_PARAM_CONTENT = "content";
@@ -26,10 +36,6 @@ public class AddNews implements Command{
 	public static final String ROLE_ADMIN = "admin";
 	public static final String ROLE_GUEST = "guest";
 	
-	public static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
-	public static final NewsServiсe NEWS_SERVISE = PROVIDER.getNewsServise();
-	public static final String ERROR_PAGE = "Controller?command=UNKNOWN_COMMAND";
-		
 	private AddNews() {
 	}
 	
@@ -81,11 +87,11 @@ public class AddNews implements Command{
 			response.sendRedirect("Controller?command=AFTER_AUTHORIZATION&responseCommandAddNews=News was added.");
 
 		} catch (ServiceExceptionValidationNews e) {
+			log.error("There are objectionable words in the news.", e);
 			response.sendRedirect(
 					"Controller?command=AFTER_AUTHORIZATION&responseCommandAddNewsErrorValidation=News was not added. There objectionable words for publication.");
 		} catch (ServiceException e) {
-			// log проблемы с доступом к БД
-			e.printStackTrace();
+			log.error("Database error during adding the news.", e);
 			response.sendRedirect(
 					"Controller?command=AFTER_AUTHORIZATION&responseCommandServiceException=Something went wrong... Try again later.");
 

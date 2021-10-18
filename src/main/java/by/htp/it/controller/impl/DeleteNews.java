@@ -2,6 +2,9 @@ package by.htp.it.controller.impl;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.htp.it.bean.News;
 import by.htp.it.bean.User;
 import by.htp.it.controller.Command;
@@ -16,15 +19,19 @@ import jakarta.servlet.http.HttpSession;
 public class DeleteNews implements Command {
 	
 	private static DeleteNews instance = new DeleteNews();
+	
+	public static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
+	public static final NewsServiсe NEWS_SERVISE = PROVIDER.getNewsServise();
+	
+	private static final Logger log = LogManager.getLogger(DeleteNews.class);
 
 	public static final String SESSION_ATTRIBUTE_USER = "user";
 	public static final String ROLE_ADMIN = "admin";
 	public static final String ROLE_GUEST = "guest";
 	public static final String REQUEST_PARAM_ID = "idNews";
+	public static final String PATH_AFTER_DELETE_NEWS = "Controller?command=Go_To_Main_Page&responseCommandDeleteNews=News was deleted.";
+	public static final String PATH_AFTER_EXCEPTION = "Controller?command=Go_To_Main_Page&responseCommandServiceException=Something went wrong... Try again later.";
 
-	public static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
-	public static final NewsServiсe NEWS_SERVISE = PROVIDER.getNewsServise();
-	
 	private DeleteNews() {}
 
 	public static DeleteNews getInstance() {
@@ -79,15 +86,13 @@ public class DeleteNews implements Command {
 		try {
 			//AFTER_AUTHORIZATION	
 			NEWS_SERVISE.delete(news);
-			response.sendRedirect("Controller?command=AFTER_AUTHORIZATION&responseCommandDeleteNews=News was deleted.");
-
+			response.sendRedirect(PATH_AFTER_DELETE_NEWS);
+			
 		} catch (ServiceException e) {
 			// log проблемы с доступом к БД
-			// перевести на страницу ошибок, где есть ссылка на главную страницу
-			e.printStackTrace();
-			response.sendRedirect(
-					"Controller?command=Go_To_Main_Page&responseCommandServiceException=Something went wrong... Try again later.");
-
+			log.error("Database error during deleting a news.", e);
+			response.sendRedirect(PATH_AFTER_EXCEPTION);
+			
 		}
 	}
 

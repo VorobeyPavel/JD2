@@ -2,6 +2,9 @@ package by.htp.it.controller.impl;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.htp.it.bean.RegistrationInfo;
 import by.htp.it.bean.User;
 import by.htp.it.controller.Command;
@@ -17,8 +20,12 @@ import jakarta.servlet.http.HttpSession;
 public class AutorizationUser implements Command {
 
 	private static AutorizationUser instance = new AutorizationUser();
+	
 	private static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
 	private static final UserServiсe USER_SERVISE = PROVIDER.getUserServise();
+	
+	private static final Logger log = LogManager.getLogger(AutorizationUser.class);
+
 	public static final String SESSION_PATH = "path";
 	public static final String PART_PATH = "Controller?command=";
 	public static final String PATH_COMMAND_AUT = "AUTHORIZATION_PAGE";
@@ -51,9 +58,11 @@ public class AutorizationUser implements Command {
 				response.sendRedirect(path); 
 				return; 
 			}
-			 
-
+			
+			System.out.println("AutorizationUser"+ valid);
+			
 			User user = USER_SERVISE.authorization(info);
+					
 			if (user == null) {
 				path =  PART_PATH + PATH_COMMAND_AUT + "&user_not_found=There is no such user";
 			} else {	
@@ -61,16 +70,14 @@ public class AutorizationUser implements Command {
 				HttpSession session = request.getSession(true);
 				session.setAttribute(SESSION_ATTRIBUTE_USER, user);
 				session.setAttribute(SESSION_ATTRIBUTE_USER_ID, user.getId());
-				
-				//request.getSession().setAttribute(SESSION_PATH, PATH_COMMAND_AFT_AUT);
 				session.setAttribute(SESSION_PATH, PATH_COMMAND_AFT_AUT);
 				path = PART_PATH + PATH_COMMAND_AFT_AUT;
 				
 			}
 		} catch (ServiceException e) {
-			// log
+			log.error("Database error during authorization.", e);
 			request.getSession(true).setAttribute(SESSION_PATH, PATH_COMMAND_ERR);
-			path = PART_PATH + PATH_COMMAND_ERR;
+			//path = PART_PATH + PATH_COMMAND_ERR;
 			
 		} 
 			

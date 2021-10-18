@@ -2,6 +2,10 @@ package by.htp.it.controller.impl;
 
 
 import java.io.IOException;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.htp.it.bean.User;
 import by.htp.it.controller.Command;
 import by.htp.it.serviсe.NewsServiсe;
@@ -16,8 +20,13 @@ import jakarta.servlet.http.HttpSession;
 
 public class GoToMainPage implements Command{
 	
+	private static GoToMainPage instance = new GoToMainPage();
+	
 	public static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
 	public static final NewsServiсe NEWS_SERVISE = PROVIDER.getNewsServise();
+	
+	private static final Logger log = LogManager.getLogger(GoToMainPage.class);
+
 	public static final String SESSION_PATH = "path";
 	public static final String PATH_COMMAND_MAIN = "go_to_main_page";
 	public static final String MAIN_PAGE = "/WEB-INF/jsp/main.jsp";
@@ -29,8 +38,6 @@ public class GoToMainPage implements Command{
 	private GoToMainPage() {
 	}
 	
-	private static GoToMainPage instance = new GoToMainPage();
-	
 	public static GoToMainPage getInstance() {
 		return instance;
 	}
@@ -38,7 +45,7 @@ public class GoToMainPage implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//List<News> newses = new ArrayList<News>();
+		
 		HttpSession session = request.getSession(true);
 					
 		try {
@@ -46,7 +53,7 @@ public class GoToMainPage implements Command{
 			session.setAttribute("newses", NEWS_SERVISE.getNewses(5));
 			//request.setAttribute("newses", NEWS_SERVISE.getNewses(10));
 		} catch (ServiceException e) {
-			
+			log.error("Database error during geting the latest news.", e);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(ERROR_PAGE);
 			requestDispatcher.forward(request, response);
 		}

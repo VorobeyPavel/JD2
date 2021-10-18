@@ -3,6 +3,9 @@ package by.htp.it.controller.impl;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.htp.it.bean.News;
 import by.htp.it.bean.User;
 import by.htp.it.controller.Command;
@@ -20,12 +23,9 @@ public class ViewFavoriteNews implements Command {
 
 	public static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
 	public static final NewsServiсe NEWS_SERVISE = PROVIDER.getNewsServise();
-
-	//public static final String PATH_FAVORITE_NEWS_PAGE = "/WEB-INF/jsp/favoriteNews.jsp";
-	//public static final String RESPONSE_ATTR_NEWS = "news";
-	//public static final String SESSION_ATTR_PATH = "path";
-	//public static final String SESSION_ATTR_PATH_COMMAND = "view_favorite_news";
 	
+	private static final Logger log = LogManager.getLogger(ViewFavoriteNews.class);
+
 	public static final String RESPONSE_ATTR_NEWS = "favoriteNews";
 	public static final String SESSION_ATTRIBUTE_USER = "user";
 
@@ -42,8 +42,7 @@ public class ViewFavoriteNews implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+			
 		User user;
 
 		List<News> listOfFavoriteNews;
@@ -70,35 +69,8 @@ public class ViewFavoriteNews implements Command {
 
 		} catch (ServiceException e) {
 
-			//log.error("Database error during getting the list of favorite news.", e);
+			log.error("Database error during getting the list of favorite news.", e);
 			response.sendRedirect(PATH_AFTER_EXCEPTION);
-
 		}
-		
-		
-		
-		/*
-		 * try {
-		 * 
-		 * int idUser; List<News> listOfFavoriteNews;
-		 * 
-		 * idUser = (int) request.getSession().getAttribute("idUser");
-		 * 
-		 * listOfFavoriteNews = NEWS_SERVISE.viewFavoriteNews(idUser);
-		 * 
-		 * request.setAttribute(RESPONSE_ATTR_NEWS, listOfFavoriteNews);
-		 * 
-		 * request.getSession(true).setAttribute(SESSION_ATTR_PATH,
-		 * SESSION_ATTR_PATH_COMMAND); RequestDispatcher requestDispatcher =
-		 * request.getRequestDispatcher(PATH_FAVORITE_NEWS_PAGE);
-		 * requestDispatcher.forward(request, response);
-		 * 
-		 * } catch (ServiceException e) { // log проблемы с доступом к БД // перевести
-		 * на страницу ошибок, где есть ссылка на главную страницу
-		 * 
-		 * e.printStackTrace(); }
-		 */
-
 	}
-
 }

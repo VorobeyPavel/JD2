@@ -3,6 +3,9 @@ package by.htp.it.controller.impl;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.htp.it.bean.News;
 import by.htp.it.bean.User;
 import by.htp.it.controller.Command;
@@ -20,6 +23,8 @@ public class ReadAllNews implements Command {
 
 	public static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
 	public static final NewsServiсe NEWS_SERVISE = PROVIDER.getNewsServise();
+	
+	private static final Logger log = LogManager.getLogger(ReadAllNews.class);
 
 	public static final String PATH_ALL_NEWS_PAGE = "/WEB-INF/jsp/allNews.jsp";
 	public static final String SESSION_ATTRIBUTE_USER = "user";
@@ -33,6 +38,8 @@ public class ReadAllNews implements Command {
 	public static final String SESSION_ATTR_PATH = "path";
 	public static final String SESSION_ATTR_PATH_COMMAND = "read_All_News";
 	public static final String SESSION_ATTRIBUTE_LIMIT_NEWS = "limitNews";
+	public static final String PATH_AFTER_EXCEPTION = "Controller?command=Go_To_Main_Page&responseCommandServiceException=Something went wrong... Try again later.";
+
 	
 	private ReadAllNews() {}
 
@@ -95,12 +102,9 @@ public class ReadAllNews implements Command {
 					"Controller?command=Go_To_All_News_Page&numberOfPages=" + numberOfPages + "&currentPage=" + page);
 
 		} catch (ServiceException e) {
-			// log
-
-			e.printStackTrace();
-			response.sendRedirect(
-					"Controller?command=Go_To_main_Page&responseCommandServiceException=Something went wrong...Try again later.");
-
+			log.error("Database error during getting the limit amount of news.", e);
+			response.sendRedirect(PATH_AFTER_EXCEPTION);
+			
 		}
 
 	}

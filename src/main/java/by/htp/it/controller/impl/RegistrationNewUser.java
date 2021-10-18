@@ -40,6 +40,9 @@ public class RegistrationNewUser implements Command {
 		
 		try {
 			RegistrationInfo info = new RegistrationInfo(request);
+			
+			System.out.println("RegistrationInfo" + info.toString());
+			
 			String valid = USER_SERVISE.validationReg(info);
 									
 			if (valid.equals("false")) {
@@ -54,7 +57,9 @@ public class RegistrationNewUser implements Command {
 				path =  PART_PATH + PATH_COMMAND_REG + "&email_is_busy=The user with this Email is already registered";
 				response.sendRedirect(path);
 				return;
-			}			
+			}
+			
+			System.out.println("RegistrationNewUser  после USER_SERVISE.registration(info);" + user.toString());
 			
 			request.getSession(true).setAttribute(SESSION_PATH, PATH_COMMAND_AUT);
 			path = PART_PATH + PATH_COMMAND_AUT + "&registration_message=Congratulations on registering, please log in";

@@ -2,6 +2,9 @@ package by.htp.it.controller.impl;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.htp.it.bean.News;
 import by.htp.it.bean.User;
 import by.htp.it.controller.Command;
@@ -20,8 +23,11 @@ public class GoToCheckOfferedNewsPage implements Command {
 
 	public static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
 	public static final NewsServiсe NEWS_SERVISE = PROVIDER.getNewsServise();
+	
+	private static final Logger log = LogManager.getLogger(GoToCheckOfferedNewsPage.class);
 
 	public static final String PATH_OFFERED_NEWS_PAGE = "/WEB-INF/jsp/checkOfferedNews.jsp";
+	public static final String PATH_AFTER_EXCEPTION = "Controller?command=Go_To_Main_Page&responseCommandServiceException=Something went wrong... Try again later.";
 	public static final String REQUEST_PARAM_ID = "idNews";
 	public static final String REQUEST_ATTR = "news";
 	public static final String SESSION_ATTRIBUTE_USER = "user";
@@ -68,20 +74,16 @@ public class GoToCheckOfferedNewsPage implements Command {
 		try {
 
 			News newsForChecking;
-
 			newsForChecking = NEWS_SERVISE.checkOfferedNews(news);
-
 			request.setAttribute(REQUEST_ATTR, newsForChecking);
 
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(PATH_OFFERED_NEWS_PAGE);
 			requestDispatcher.forward(request, response);
 
 		} catch (ServiceException e) {
-
-			e.printStackTrace();
-			response.sendRedirect(
-					"Controller?command=Go_To_main_Page&responseCommandServiceException=Something went wrong...Try again later.");
-
+			log.error("Database error while opening the page to check the news.", e);
+			response.sendRedirect(PATH_AFTER_EXCEPTION);
+			
 		}
 
 	}

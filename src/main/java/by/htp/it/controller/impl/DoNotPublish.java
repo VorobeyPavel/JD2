@@ -2,6 +2,9 @@ package by.htp.it.controller.impl;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.htp.it.bean.News;
 import by.htp.it.bean.User;
 import by.htp.it.controller.Command;
@@ -19,11 +22,17 @@ public class DoNotPublish implements Command {
 
 	public static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
 	public static final NewsServiсe NEWS_SERVISE = PROVIDER.getNewsServise();
+	
+	private static final Logger log = LogManager.getLogger(DoNotPublish.class);
 
 	public static final String SESSION_ATTRIBUTE_USER = "user";
 	public static final String ROLE_ADMIN = "admin";
 	public static final String ROLE_GUEST = "guest";
 	public static final String REQUEST_PARAM_ID = "idNews";
+	public static final String PATH_USER_NOT_ADMIN = "Controller?command=Go_To_main_Page&messageErrorNoRights=You do not have access rights to perform this operation.";
+	public static final String PATH_AFTER_DENY_PUBLISHING = "Controller?command=view_offered_news";
+	public static final String PATH_AFTER_EXCEPTION = "Controller?command=Go_To_Main_Page&responseCommandServiceException=Something went wrong... Try again later.";
+
 	
 	private DoNotPublish() {}
 
@@ -62,14 +71,13 @@ public class DoNotPublish implements Command {
 		try {
 
 			NEWS_SERVISE.doNotPublish(newsDenyToPublish);
-			response.sendRedirect("Controller?command=view_offered_news");
-
+			response.sendRedirect(PATH_AFTER_DENY_PUBLISHING);
+			
 		} catch (ServiceException e) {
 			// log проблемы с доступом к БД
-			e.printStackTrace();
-			response.sendRedirect(
-					"Controller?command=Go_To_main_Page&responseCommandServiceException=Something went wrong... Try again later.");
-
+			log.error("Database error at the time of refusal to publish a news.", e);
+			response.sendRedirect(PATH_AFTER_EXCEPTION);
+			
 		}
 
 	}

@@ -28,6 +28,7 @@ public class SQLUserDAO implements UserDAO {
 	 */
 	
 	private static final ConnectionPool CONN_POOL = ConnectionPool.getInstance();
+	
 	public static final String INSERT_INTO_USERS = "INSERT INTO user_new(name,surname,email,password,Date) VALUES(?,?,?,?,?)";
 	public static final String SELECT_FROM_USER = "SELECT * FROM user_new";
 	public static final String PREPARE_CHANGE_PASSWORD = "SELECT * FROM user_new WHERE id=?";
@@ -41,17 +42,16 @@ public class SQLUserDAO implements UserDAO {
 		
 		tableUsers();		
 		System.out.println("регистрация после tableUsers()");		
-		// 
+		 
 		for(Map.Entry<Integer, User> mEntry : tableUsersMap.entrySet()) {
 			if(info.getEmail().equals(mEntry.getValue().getEmail())) {
 				return null;
 			}
 		}
 				
-		try(Connection con = CONN_POOL.takeConnection()) {
-			
-			String sql = INSERT_INTO_USERS;
-			PreparedStatement ps = con.prepareStatement(sql);
+		try(Connection con = CONN_POOL.takeConnection();
+				PreparedStatement ps = con.prepareStatement(INSERT_INTO_USERS)) {
+					
 			Date date = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -64,9 +64,7 @@ public class SQLUserDAO implements UserDAO {
 			ps.executeUpdate();
 			return new User(info.getEmail(),info.getEnter_password());
 			
-		} catch (SQLException e1) {
-			throw new DAOException();
-		} catch (ConnectionPoolException e) {
+		} catch (SQLException | ConnectionPoolException e) {
 			throw new DAOException(e);
 		}		
 	}
@@ -76,6 +74,9 @@ public class SQLUserDAO implements UserDAO {
 	public User authorization(RegistrationInfo info) throws DAOException {
 		
 		tableUsers();
+		
+		System.out.println(tableUsersMap.toString());
+		
 		try {
 			// 
 			for(Map.Entry<Integer, User> mEntry :tableUsersMap.entrySet()) {
@@ -83,36 +84,33 @@ public class SQLUserDAO implements UserDAO {
 					
 					System.out.println(new User(mEntry.getKey(), mEntry.getValue().getName(), mEntry.getValue().getRole()));
 					System.out.println("!!!!");
-					//System.out.println(mEntry.getValue());
+					
 					return new User(mEntry.getKey(), mEntry.getValue().getName(), mEntry.getValue().getRole());
 				}
 			}
 		} catch (Exception e) {
-			throw new DAOException();
+			throw new DAOException(e);
 		}
-
 		return null;
 	}
 
 	
-	private static void tableUsers() throws DAOException{						
-	    
-		try (Connection con = CONN_POOL.takeConnection()){
-		Statement st = con.createStatement();
-	    ResultSet rs = st.executeQuery(SELECT_FROM_USER);	    
+	private static void tableUsers() throws DAOException {
 
-	    while (rs.next()) {
-	    	tableUsersMap.put(rs.getInt(1), new User(rs.getString(2), rs.getString(3) ,rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
-	    }
-	    	rs.close();
-		    st.close();
-		    		    	    
-	    } catch (SQLException e) {
-	    	throw new DAOException(e);
-		} catch (ConnectionPoolException e) {
+		try (Connection con = CONN_POOL.takeConnection();
+				Statement st = con.createStatement();) {
+			
+			ResultSet rs = st.executeQuery(SELECT_FROM_USER);
+
+			while (rs.next()) {
+				tableUsersMap.put(rs.getInt(1), new User(rs.getString(2), rs.getString(3), rs.getString(4),
+						rs.getString(5), rs.getString(6), rs.getString(7)));
+			}
+
+		} catch (SQLException | ConnectionPoolException e) {
+
 			throw new DAOException(e);
-		} 
-				    
+		}
 	}
 
 
@@ -144,14 +142,9 @@ public class SQLUserDAO implements UserDAO {
 			psUpdatePassword.setInt(2, user.getId());
 			psUpdatePassword.executeUpdate();
 
-		} catch (SQLException |
-
-				ConnectionPoolException e) {
+		} catch (SQLException | ConnectionPoolException e) {
 
 			throw new DAOException(e);
-
-		}
-		
+		}		
 	}
-
 }

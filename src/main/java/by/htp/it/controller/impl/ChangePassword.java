@@ -2,8 +2,8 @@ package by.htp.it.controller.impl;
 
 import java.io.IOException;
 
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import by.htp.it.bean.RegistrationInfo;
 import by.htp.it.bean.User;
@@ -30,8 +30,7 @@ public class ChangePassword implements Command {
 		return instance;
 	}
 	
-
-	//private static final Logger log = LogManager.getLogger(ChangePassword.class);
+	private static final Logger log = LogManager.getLogger(ChangePassword.class);
 
 	public static final String SESSION_ATTR_USER = "user";
 
@@ -102,15 +101,15 @@ public class ChangePassword implements Command {
 			response.sendRedirect(PATH_AFTER_CHANGING_PASSWORD);
 
 		} catch (ServiceExceptionValidationPassword e) {
-			//log.error("The new password does not meet the password requirements.", e);
+			log.error("The new password does not meet the password requirements.", e);
 			response.sendRedirect(PATH_AFTER_VALIDATION_EXCEPTION);
 
 		} catch (ServiceExceptionInvalidPassword e) {
-			//log.error("Incorrect user password entered.", e);
+			log.error("Incorrect user password entered.", e);
 			response.sendRedirect(PATH_AFTER_INVALID_PASSWORD);
 
 		} catch (ServiceException e) {
-			//log.error("Database error during changing password.", e);
+			log.error("Database error during changing password.", e);
 			response.sendRedirect(PATH_AFTER_EXCEPTION);
 
 		}

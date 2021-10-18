@@ -62,10 +62,12 @@ public class AfterAuthorization implements Command{
 		System.out.println(user.toString()+"AfterAuthorization");
 		System.out.println(user.getRole());
 		
-		if(user!=null) {
+		if(user.getRole()!=null) {
 			if(!user.getRole().toString().equals("admin")) {
 				user.setRole("user");
 			}
+		}else {
+			user.setRole("user");
 		}
 		
 		System.out.println(user.toString()+"AfterAuthorization2");

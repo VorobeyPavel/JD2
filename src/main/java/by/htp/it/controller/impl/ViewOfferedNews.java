@@ -3,6 +3,9 @@ package by.htp.it.controller.impl;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.htp.it.bean.News;
 import by.htp.it.bean.User;
 import by.htp.it.controller.Command;
@@ -22,6 +25,8 @@ public class ViewOfferedNews implements Command {
 	public static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
 	public static final NewsServiсe NEWS_SERVISE = PROVIDER.getNewsServise();
 	
+	private static final Logger log = LogManager.getLogger(ViewOfferedNews.class);
+
 	public static final String SESSION_ATTR_PATH = "path";
 	public static final String SESSION_ATTR_PATH_COMMAND = "view_offered_news";
 	public static final String RESPONSE_ATTR_NEWS = "offeredNews";
@@ -77,11 +82,8 @@ public class ViewOfferedNews implements Command {
 			requestDispatcher.forward(request, response);
 
 		} catch (ServiceException e) {
-			// log проблемы с доступом к БД
-			// перевести на страницу ошибок, где есть ссылка на главную страницу
+			log.error("Database error during getting the list of offered news.", e);
 			response.sendRedirect(PATH_AFTER_COMMAND_ERROR);
-			e.printStackTrace();
 		}
-
 	}
 }

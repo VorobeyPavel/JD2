@@ -2,6 +2,9 @@ package by.htp.it.controller.impl;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.htp.it.bean.News;
 import by.htp.it.controller.Command;
 import by.htp.it.serviсe.NewsServiсe;
@@ -18,6 +21,8 @@ public class GoToPublish implements Command {
 	public static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
 	public static final NewsServiсe NEWS_SERVISE = PROVIDER.getNewsServise();
 
+	private static final Logger log = LogManager.getLogger(GoToPublish.class);
+	
 	public static final String REQUEST_PARAM_ID = "idNews";
 	public static final String PATH_AFTER_APPROVAL = "Controller?command=view_offered_news";
 	public static final String PATH_AFTER_COMMAND_ERROR = "Controller?command=Go_To_Main_Page&responseCommand=Connection error. Try later.";
@@ -43,10 +48,9 @@ public class GoToPublish implements Command {
 			response.sendRedirect(PATH_AFTER_APPROVAL);
 
 		} catch (ServiceException e) {
-			// log проблемы с доступом к БД
+			log.error("Database error during approving a news.", e);
 			// перевести на страницу ошибок, где есть ссылка на главную страницу
-			response.sendRedirect(PATH_AFTER_COMMAND_ERROR);
-			e.printStackTrace();
+			response.sendRedirect(PATH_AFTER_COMMAND_ERROR);			
 		}
 
 	}

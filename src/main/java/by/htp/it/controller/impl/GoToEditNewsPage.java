@@ -2,6 +2,9 @@ package by.htp.it.controller.impl;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.htp.it.bean.News;
 import by.htp.it.bean.User;
 import by.htp.it.controller.Command;
@@ -20,6 +23,8 @@ public class GoToEditNewsPage implements Command {
 
 	public static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
 	public static final NewsServiсe NEWS_SERVISE = PROVIDER.getNewsServise();
+	
+	private static final Logger log = LogManager.getLogger(GoToEditNewsPage.class);
 
 	public static final String SESSION_ATTR_PATH_COMMAND = "go_to_edit_news_page&idNews=";
 	public static final String SESSION_ATTR_PATH = "path";
@@ -31,6 +36,7 @@ public class GoToEditNewsPage implements Command {
 	public static final String REQUEST_ATTR_TITLE = "title";
 	public static final String REQUEST_ATTR_BRIEF = "brief";
 	public static final String REQUEST_ATTR_CONTENT = "content";
+	public static final String PATH_AFTER_EXCEPTION = "Controller?command=Go_To_Main_Page&responseCommandServiceException=Something went wrong... Try again later.";
 	
 	public static GoToEditNewsPage getInstance() {
 		return instance;
@@ -88,12 +94,8 @@ public class GoToEditNewsPage implements Command {
 			requestDispatcher.forward(request, response);
 
 		} catch (ServiceException e) {
-			// log проблемы с доступом к БД
-
-			e.printStackTrace();
-			response.sendRedirect(
-					"Controller?command=Go_To_Main_Page&responseCommandServiceException=Something went wrong... Try again later.");
-
+			log.error("Database error during editing a news.", e);
+			response.sendRedirect(PATH_AFTER_EXCEPTION);
 		}
 
 	}

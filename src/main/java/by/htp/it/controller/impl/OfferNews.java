@@ -2,6 +2,9 @@ package by.htp.it.controller.impl;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.htp.it.bean.News;
 import by.htp.it.controller.Command;
 import by.htp.it.serviсe.NewsServiсe;
@@ -18,6 +21,8 @@ public class OfferNews implements Command {
 
 	public static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
 	public static final NewsServiсe NEWS_SERVISE = PROVIDER.getNewsServise();
+	
+	private static final Logger log = LogManager.getLogger(OfferNews.class);
 
 	public static final String REQUEST_PARAM_TITLE = "title";
 	public static final String REQUEST_PARAM_BRIEF = "brief";
@@ -68,12 +73,12 @@ public class OfferNews implements Command {
 
 		} catch (ServiceExceptionValidationNews e) {
 
-			//log.error("There are objectionable words in the news.", e);
+			log.error("There are objectionable words in the news.", e);
 			System.out.println("There are objectionable words in the news.");
 			response.sendRedirect(PATH_AFTER_VALIDATION_EXCEPTION);
 
 		} catch (ServiceException e) {
-			//log.error("Database error during offering the news.", e);
+			log.error("Database error during offering the news.", e);
 			System.out.println("Database error during offering the news.");
 			response.sendRedirect(PATH_AFTER_EXCEPTION);
 
