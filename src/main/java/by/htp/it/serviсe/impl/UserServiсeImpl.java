@@ -19,9 +19,8 @@ public class UserServiсeImpl implements UserServiсe {
 	public static final String PATTERN_NAME = "^[a-zA-Z][a-zA-Z]{2,20}$";
 	public static final String PATTERN_SURNAME = "^[a-zA-Z][a-zA-Z]{2,20}$";
 	public static final String PATTERN_LOGIN = "^[a-zA-Z]{6,20}$";
-	
 	public static final String PATTERN_EMAIL = "^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}$";
-	public static final String PATTERN_PASSWORD = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}";
+	public static final String PATTERN_PASSWORD = "((?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,})";
 	
 	// для имени/фамилии
 		// латинскими от 2 до 20 символов
@@ -110,17 +109,6 @@ public class UserServiсeImpl implements UserServiсe {
 		
 		validateByChangingPassword(info);
 		
-		/*
-		 * int tempOldPassword = info.getEnter_password().hashCode(); String
-		 * hashOldPassword = String.valueOf(tempOldPassword);
-		 * 
-		 * int tempNewPassword = info.getNewPassword().hashCode(); String
-		 * hashNewPassword = String.valueOf(tempNewPassword);
-		 * 
-		 * RegistrationInfo newInfo = new RegistrationInfo(hashOldPassword,
-		 * hashNewPassword);
-		 */
-
 		try {
 			USER_DAO.changePassword(user, info);
 		} catch (DAOExceptionInvalidPassword e) {

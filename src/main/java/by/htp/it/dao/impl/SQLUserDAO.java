@@ -34,13 +34,14 @@ public class SQLUserDAO implements UserDAO {
 	public static final String PREPARE_CHANGE_PASSWORD = "SELECT * FROM user_new WHERE id=?";
 	public static final String CHANGE_PASSWORD = "UPDATE user_new SET password = ? WHERE id = ?";
 	
-	
-	static Map <Integer, User> tableUsersMap = new HashMap<Integer, User>();
 
 	@Override
 	public User registration(RegistrationInfo info) throws DAOException {
 		
-		tableUsers();		
+		Map <Integer, User> tableUsersMap = new HashMap<Integer, User>();
+		
+		tableUsersMap=tableUsers();
+		
 		System.out.println("регистрация после tableUsers()");		
 		 
 		for(Map.Entry<Integer, User> mEntry : tableUsersMap.entrySet()) {
@@ -73,7 +74,9 @@ public class SQLUserDAO implements UserDAO {
 	@Override
 	public User authorization(RegistrationInfo info) throws DAOException {
 		
-		tableUsers();
+		Map <Integer, User> tableUsersMap = new HashMap<Integer, User>();
+		
+		tableUsersMap=tableUsers();
 		
 		System.out.println(tableUsersMap.toString());
 		
@@ -95,7 +98,9 @@ public class SQLUserDAO implements UserDAO {
 	}
 
 	
-	private static void tableUsers() throws DAOException {
+	private static Map <Integer, User> tableUsers() throws DAOException {
+		
+		Map <Integer, User> tableUsersMap = new HashMap<Integer, User>();
 
 		try (Connection con = CONN_POOL.takeConnection();
 				Statement st = con.createStatement();) {
@@ -111,6 +116,7 @@ public class SQLUserDAO implements UserDAO {
 
 			throw new DAOException(e);
 		}
+		return tableUsersMap;
 	}
 
 

@@ -9,7 +9,7 @@ import by.htp.it.dao.exception.DAOException;
 
 public interface NewsDAO {
 	
-	List<News> getNewses(int quantity) throws DAOException;
+	List<News> getNewses() throws DAOException;
 	
 	News read(News news) throws DAOException;
 	

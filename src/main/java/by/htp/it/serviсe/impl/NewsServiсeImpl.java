@@ -18,9 +18,9 @@ public class NewsServiсeImpl implements NewsServiсe {
 	private static final NewsDAO NEWS_DAO = PROVIDER.getNewsDAO();
 
 	@Override
-	public List<News> getNewses(int quantity) throws ServiceException {
+	public List<News> getNewses() throws ServiceException {
 		try {
-			return NEWS_DAO.getNewses(quantity);
+			return NEWS_DAO.getNewses();
 		} catch (DAOException e) {
 			throw new ServiceException();
 		}

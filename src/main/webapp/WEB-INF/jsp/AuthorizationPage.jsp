@@ -69,9 +69,17 @@
 		<!-- Поля для ввода Email и пороля -->
 	
 		<form action="Controller" method="post">
-			<input type="hidden" name="command" value="Authorization_user" /> 
-			<input type="text" name="email" placeholder="${email}" value="" /> 
-			<input type="password" name="enter_password" placeholder="${enter_password}" value="" />
+			<input type="hidden" name="command" value="Authorization_user" />
+			 
+			<input type="text" name="email" placeholder="${email}" value="" 
+			required pattern="*" 
+			title="Проверьте наличие введенного адреса электронной почты."/>
+			 
+			<input type="password" name="enter_password" placeholder="${enter_password}" value="" 
+			required pattern="((?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,})" 
+			title="Пароль должен содержать: хотя бы одну цифру; хотя бы один специальный символ [! @ # $% ^ & *]; хотя бы одну строчную латинскую букву; хотя бы одну заглавную латинскую букву; состоит как минимум из 8 вышеназванных символов" 
+   			/>
+			
 			<p><c:out value="${password_hint}"/></p>
 			<input style="/* background: #324AB2; */ width: 30%;" type="submit"
 				class="button" value="${Login_button}" />

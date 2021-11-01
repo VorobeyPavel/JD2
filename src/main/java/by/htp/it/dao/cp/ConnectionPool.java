@@ -66,7 +66,7 @@ public class ConnectionPool {
 		try {
 			initPoolData();
 		} catch (ConnectionPoolException e) {
-			e.printStackTrace();
+			throw new RuntimeException("InitPoolData error", e);
 		}
 	}
 

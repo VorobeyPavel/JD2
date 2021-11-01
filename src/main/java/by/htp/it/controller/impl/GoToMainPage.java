@@ -50,7 +50,7 @@ public class GoToMainPage implements Command{
 					
 		try {
 			
-			session.setAttribute("newses", NEWS_SERVISE.getNewses(5));
+			session.setAttribute("newses", NEWS_SERVISE.getNewses());
 			//request.setAttribute("newses", NEWS_SERVISE.getNewses(10));
 		} catch (ServiceException e) {
 			log.error("Database error during geting the latest news.", e);

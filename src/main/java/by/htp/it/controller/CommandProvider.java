@@ -52,7 +52,8 @@ public class CommandProvider {
 		commands.put(CommandName.ADD_NEWS, AddNews.getInstance());
 		commands.put(CommandName.GO_TO_EDIT_NEWS_PAGE, GoToEditNewsPage.getInstance() );
 		commands.put(CommandName.EXIT, Exit.getInstance());
-		commands.put(CommandName.READ_NEWS, ReadNews.getInstance());
+		commands.put(CommandName.READ_NEWS, new ReadNews());
+		//commands.put(CommandName.READ_NEWS, (ReadNews)ReadNews.getInstance());
 		commands.put(CommandName.ADD_TO_FAVORITES, AddToFavorites.getInstance());
 		commands.put(CommandName.DELETE_FROM_FAVORITES, DeleteFromFavorites.getInstance());
 		commands.put(CommandName.ADD_COMMENT, AddComment.getInstance());

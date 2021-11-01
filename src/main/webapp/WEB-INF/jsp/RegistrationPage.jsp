@@ -71,18 +71,42 @@
 		<form action="Controller" method="post">
 			<input type="hidden" name="command" value="Registration_new_user" />
 
-			<input type="text" name="name" placeholder="${name}" value="" /> 
-			<input type="text" name="surname" placeholder="${surname}" value="" />
-			<input type="text" name="email" placeholder="${email}" value="" /> 
-			<input type="password" name="enter_password" placeholder="${enter_password}" value="" />
-			<input type="password" name="repeat_password" placeholder="${repeat_password}" value="" />
+			<%-- <input type="text" name="name" placeholder="${name}" value="" />  --%>
 			
-			<p><c:out value="${password_hint}"/></p>
+			<br /> <br /> 
+			<input type="text" name="name" placeholder="${name}" value=""
+			required pattern="^[a-zA-Z][a-zA-Z]{2,15}$" 
+			title="Имя должно содержать от 2 до 20 латинских символов"> 
+   			<br /> <br /> 
+  
+			<input type="text" name="surname" placeholder="${surname}" value="" 
+			required pattern="^[a-zA-Z][a-zA-Z]{2,15}$" 
+			title="Фамилия должна содержать от 2 до 20 латинских символов"> 
+   			<br /> <br />
+   			 
+			<input type="text" name="email" placeholder="${email}" value="" 
+			required pattern="*" 
+			title="Проверьте наличие введенного адреса электронной почты."> 
+   			<br /> <br />
+			
+			<input type="password" name="enter_password" placeholder="${enter_password}" value="" 
+			required pattern="((?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,})" 
+			title="Пароль должен содержать: хотя бы одну цифру; хотя бы один специальный символ [! @ # $% ^ & *]; хотя бы одну строчную латинскую букву; хотя бы одну заглавную латинскую букву; состоит как минимум из 8 вышеназванных символов"> 
+   			<br /> <br />
+   			
+			<input type="password" name="repeat_password" placeholder="${repeat_password}" value="" 
+			required pattern="((?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,})" 
+			title="Пароль должен содержать: хотя бы одну цифру; хотя бы один специальный символ [! @ # $% ^ & *]; хотя бы одну строчную латинскую букву; хотя бы одну заглавную латинскую букву; состоит как минимум из 8 вышеназванных символов"> 
+   			<br /> <br />
+   			
+			<%-- <p><c:out value="${password_hint}"/></p> --%>
 
 			<input style="/* background: #324AB2; */ width: 30%;" type="submit"
 				class="button" value="${Register_button}" />
 		</form>
+		
 	</div>
+	
 
 </body>
 </html>

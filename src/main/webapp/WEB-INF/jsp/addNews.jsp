@@ -35,13 +35,13 @@
 
 	<form action="Controller" method="post">
 		<input type="hidden" name="local" value="ru" /> <input type="hidden"
-			name="command" value="CHANGE_LOCALE" /> <input type="submit"
+			name="command" value="CHANGE_LOCAL" /> <input type="submit"
 			value="${ru_button}" /><br />
 	</form>
 
 	<form action="Controller" method="post">
 		<input type="hidden" name="local" value="en" /> <input type="hidden"
-			name="command" value="CHANGE_LOCALE" /> <input type="submit"
+			name="command" value="CHANGE_LOCAL" /> <input type="submit"
 			value="${en_button}" /><br />
 	</form>
 
@@ -67,12 +67,24 @@
 
 		<br />
 		<c:out value="${enter_title}" />
-		<input type="text" name="title" value="" required /><br /> <br />
+		<input type="text" name="title" value="" required 
+		pattern="^(.|\n){2,30}$" 
+		title="Название должно содержать от 2 до 30  символов"/>
+		<br /> <br />
+		
 		<c:out value="${enter_brief}" />
-		<input type="text" name="brief" value="" /><br /> <br />
+		<input type="text" name="brief" value="" required
+		pattern="^(.|\n){2,100}$" 
+		title="Краткое описание должно содержать от 2 до 100 символов"/>
+		<br /> <br />
+		
 		<c:out value="${enter_content}" />
-		<input type="text" name="content" value="" /><br /> <br /> <input
-			type="submit" value="${button_send}" /><br />
+		<input type="text" name="content" value="" required
+		pattern="^(.|\n){2,1000}$" 
+		title="Содержание должно быть от 2 до 1000 символов"/>
+		<br /> <br /> 
+		
+		<input type="submit" value="${button_send}" /><br />
 	</form>
 
 

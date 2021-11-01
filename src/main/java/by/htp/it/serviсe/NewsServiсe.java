@@ -10,7 +10,7 @@ import by.htp.it.serviсe.exception.ServiceException;
 
 public interface NewsServiсe {
 
-	List<News> getNewses(int quantity) throws ServiceException;
+	List<News> getNewses() throws ServiceException;
 	
 	void add(News news) throws ServiceException;
 

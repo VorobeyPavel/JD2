@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpSession;
 
 public class ReadNews implements Command {
 	
-	private static ReadNews instance = new ReadNews();
+	//private static ReadNews instance = new ReadNews();
 	
 	public static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
 	public static final NewsServiсe NEWS_SERVISE = PROVIDER.getNewsServise();
@@ -41,11 +41,11 @@ public class ReadNews implements Command {
 	public static final String IS_FAVOURITE = "isFavourite";
 	public static final String PATH_AFTER_EXCEPTION = "Controller?command=Go_To_Main_Page&responseCommandServiceException=Something went wrong... Try again later.";
 	
-	private ReadNews() {}
-
-	public static ReadNews getInstance() {
-		return instance;
-	}
+	/*
+	 * private ReadNews() {}
+	 * 
+	 * public static ReadNews getInstance() { return instance; }
+	 */
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

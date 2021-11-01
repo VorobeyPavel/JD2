@@ -2,6 +2,9 @@ package by.htp.it.controller.impl;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.htp.it.bean.User;
 import by.htp.it.controller.Command;
 import by.htp.it.serviсe.NewsServiсe;
@@ -19,8 +22,10 @@ public class AfterAuthorization implements Command{
 	
 	public static final ServiсeProvider PROVIDER = ServiсeProvider.getInstance();
 	public static final NewsServiсe NEWS_SERVISE = PROVIDER.getNewsServise();
-	public static final String ERROR_PAGE = "Controller?command=UNKNOWN_COMMAND";
 	
+	private static final Logger log = LogManager.getLogger(GoToMainPage.class);
+	
+	public static final String ERROR_PAGE = "Controller?command=UNKNOWN_COMMAND";
 	public static final String SESSION_PATH = "path";
 	public static final String PART_PATH = "Controller?command=";
 	public static final String AUTHORIZATION_PAGE = "AUTHORIZATION_PAGE";
@@ -33,16 +38,15 @@ public class AfterAuthorization implements Command{
 		return instance;
 	}
 	
-
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession(false);
 		
 		try {
-			request.setAttribute("newses", NEWS_SERVISE.getNewses(5));
+			request.setAttribute("newses", NEWS_SERVISE.getNewses());
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			log.error("Database error during geting the latest news.", e);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(ERROR_PAGE);
 			requestDispatcher.forward(request, response);
 		}
@@ -72,9 +76,9 @@ public class AfterAuthorization implements Command{
 		
 		System.out.println(user.toString()+"AfterAuthorization2");
 		
-		request.getSession(true).setAttribute(SESSION_PATH, SESSION_PATH_COMMAND);
-		request.setAttribute("role", user.getRole());
 		
+		request.setAttribute("role", user.getRole());
+		request.getSession(true).setAttribute(SESSION_PATH, SESSION_PATH_COMMAND);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(AFTER_AUTHORIZATION_PAGE);
 		requestDispatcher.forward(request, response);
 		

@@ -107,6 +107,9 @@
 	<c:set var="mer" value="${sessionScope.user}" />
 	<p class="text"><c:out value="${mer.getName()} ${hello}" /></p>
 	
+	<c:out value="${param.responseCommandDeleteNews}"/>
+	
+	
 	<HR WIDTH="90%" ALIGN="center" SIZE="2">
 	
 	<%-- <table class="text" align="center">

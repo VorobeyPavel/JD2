@@ -43,9 +43,10 @@
 	<br>
 	<br>
 	<div class="header1">
-		${edit_news} <img src="recources/pictures/leaf.png" width="70"
-			height="90">
+		${edit_news} 
+		<img src="recources/pictures/leaf.png" width="70" height="90">
 	</div>
+	
 	<div class="answer">
 		<c:if test="${not empty param.messageErrorEmpty}">
 			<c:out value="${errorEditNewsEmptyFields}" />
@@ -61,21 +62,27 @@
 		<h2>
 			<c:out value="${enter_title}" />
 		</h2>
-		<br /> <input type="text" name="title" value="${requestScope.title}" /><br />
-		<br />
+		<br /> 
+		<input type="text" name="title" value="${requestScope.title}" />
+		<br /><br />
+		
 		<h2>
 			<c:out value="${enter_brief}" />
 		</h2>
-		<br /> <input type="text" name="brief" value="${requestScope.brief}" /><br />
-		<br />
+		<br /> 
+		<input type="text" name="brief" value="${requestScope.brief}" />
+		<br /><br />
+		
 		<h2>
 			<c:out value="${enter_content}" />
 		</h2>
 		<br />
 		<textarea name="content" style="height: 200px">${requestScope.content}</textarea>
 		<br /> <br />
+		
 		<button class="button">${button_send}</button>
 		<br /> <br />
+		
 	</form>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
 </body>

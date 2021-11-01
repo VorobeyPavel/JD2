@@ -24,6 +24,7 @@ public class SQLNewsDAO implements NewsDAO {
 	
 	private static final ConnectionPool CONN_POOL = ConnectionPool.getInstance();
 	
+	public static final String LIST_NEWS_SELECT = "SELECT * FROM news_my WHERE status = 'published' ORDER BY date DESC LIMIT 5 ";
 	public static final String ADD_NEWS_INSERT_INTO = "INSERT INTO news_my(title,brief,content,date,id_user,status) VALUES(?,?,?,?,?,?)";
 	public static final String OFFER_NEWS_INSERT_INTO = "INSERT INTO news_my(title,brief,content,date,id_user,status) VALUES(?,?,?,?,?,?)";
 	public static final String UPDATE_NEWS = "UPDATE news_my SET title = ?, brief = ?, content = ? WHERE id = ?";
@@ -44,48 +45,32 @@ public class SQLNewsDAO implements NewsDAO {
 	public static final String LIST_OF_ALL_NEWS_SELECT = "SELECT * FROM news_my WHERE status = 'published' LIMIT ";
 	public static final String COUNT_AMOUNT_OF_ALL_NEWS = "SELECT * FROM news_my WHERE status = 'published'";
 	public static final String COMMA = " ,";
-	
-	static List<News> newses = new ArrayList<News>();
 
 	@Override
-	public List<News> getNewses(int quantity) throws DAOException {
-		try {
-
-			List<News> requestedNews = new ArrayList<News>();
-
-			tableNewses();
-
-			int totalNews = newses.size();
-
-			if (quantity > totalNews) {
-				quantity = totalNews;
-			}
-
-			for (int i = 0; i < quantity; i++) {
-				requestedNews.add(newses.get(i));
-			}
-			return requestedNews;
-
-		} catch (DAOException e) {
-			throw new DAOException(e);
-		}
-	}
-	
-	
-	private static void tableNewses() throws DAOException {
-				
+	public List<News> getNewses() throws DAOException {
+		
+		List<News> newses = new ArrayList<News>();
+		
 		try (Connection con = CONN_POOL.takeConnection();
-				Statement st = con.createStatement()) {
-			
-			ResultSet rs = st.executeQuery(SELECT_FROM_NEWS);
+				PreparedStatement ps = con.prepareStatement(LIST_NEWS_SELECT);
+				ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
-				newses.add(new News(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3)));
+
+				int id = rs.getInt(1);
+				String title = rs.getString(2);
+				String brief = rs.getString(3);
+	
+				News news = new News(id, title, brief);
+				newses.add(news);
 			}
 
-		} catch (SQLException |ConnectionPoolException e) {
+		} catch (SQLException | ConnectionPoolException e) {
+			// log
 			throw new DAOException(e);
 		}
+
+		return newses;
 
 	}
 

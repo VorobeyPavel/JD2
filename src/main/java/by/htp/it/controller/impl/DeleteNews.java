@@ -29,7 +29,7 @@ public class DeleteNews implements Command {
 	public static final String ROLE_ADMIN = "admin";
 	public static final String ROLE_GUEST = "guest";
 	public static final String REQUEST_PARAM_ID = "idNews";
-	public static final String PATH_AFTER_DELETE_NEWS = "Controller?command=Go_To_Main_Page&responseCommandDeleteNews=News was deleted.";
+	public static final String PATH_AFTER_DELETE_NEWS = "Controller?command=AFTER_AUTHORIZATION&responseCommandDeleteNews=News was deleted.";
 	public static final String PATH_AFTER_EXCEPTION = "Controller?command=Go_To_Main_Page&responseCommandServiceException=Something went wrong... Try again later.";
 
 	private DeleteNews() {}
