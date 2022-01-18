@@ -131,6 +131,13 @@ public class PrintImpl implements Print{
 
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))){
             String nameFile = bufferedReader.readLine();
+
+            if (!nameFile.matches("([A-Z|a-z]://[^*|\"<>?\\n]*)|(////.*?//.*)+")){
+                System.out.println("Файла не существует. Введите корректный путь к файлу(для Windows). " +
+                        "Примерный вариант: C://Users//Pavel//Desktop//CheckToFile.txt");
+                return;
+            }
+
             FileWriter fileWriter = new FileWriter(nameFile, false);
             fileWriter.write("            CASH RECEIPT\n" +
                     "           supermarket 123\n" +

@@ -8,7 +8,6 @@ public class Product {
     public int count;
     public double priceTotal;
 
-
     public Product() {
     }
 

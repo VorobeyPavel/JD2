@@ -1,4 +1,4 @@
-package ru.clevertec.check.control;
+package ru.clevertec.check.controller;
 
 import ru.clevertec.check.bean.Product;
 import ru.clevertec.check.dto.DaoImpl;
@@ -30,7 +30,6 @@ public class Start {
         ArrayList<Product> listProductAndPrice = dao.priceProduct(listProduct, dao.getWarehouse());
 
         //Вариант получения товаров из файла. Используем getWarehouseWithFile()
-        //Мой пример расположения файла: C://Users//Pavel//Desktop//Warehouse.txt
         //ArrayList<Product> listProductAndPrice = dao.priceProduct(listProduct, dao.getWarehouseWithFile());
 
 
@@ -41,10 +40,10 @@ public class Start {
         int numberCard = dao.getNumberCard(productLine);
 
         PrintImpl print = PrintImpl.getInstance();
+
         // Метод для вывода чека в консоль
         print.printCheckToConsole(listProductAndPrice, quantityDiscount, numberCard);
         //Метод для вывода чека в файл
-        //Мой пример расположения файла: C://Users//Pavel//Desktop//CheckToFile.txt
         print.printCheckToFile(listProductAndPrice, quantityDiscount, numberCard);
 
     }

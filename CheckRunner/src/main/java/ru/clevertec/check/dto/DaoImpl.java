@@ -52,6 +52,12 @@ public class DaoImpl implements dao{
         try {
             String nameFile = bufferedReader.readLine();
 
+            if (!nameFile.matches("([A-Z|a-z]://[^*|\"<>?\\n]*)|(////.*?//.*)+")){
+                System.out.println("Файла не существует. Введите корректный путь к файлу(для Windows). " +
+                        "Примерный вариант: C://Users//Pavel//Desktop//Warehouse.txt");
+                System.exit(0);
+            }
+
             FileReader fileReader = new FileReader(nameFile);
             BufferedReader bufferedReader1 = new BufferedReader(fileReader);
 
@@ -93,13 +99,13 @@ public class DaoImpl implements dao{
                     listProducts.add(product);
                 }
             }catch (StringIndexOutOfBoundsException e){
-                System.out.println("Вы ввели неверный формат данных. Допустимый формат данный: 3-2 2-5 5-3 card-1234");
-                return null;
+                System.out.println("Вы ввели неверный формат данных. Допустимый формат данных: 3-2 2-5 5-3 card-1234");
+                System.exit(0);
             } catch (NumberFormatException | IndexOutOfBoundsException e){
-                System.out.println("Вы ввели недоступный ID товара или неверный формат данных количества товара.\n" +
-                        "ID может иметь значение от 1 до 10. Количество товара целочисленное значение. " +
-                        "Значение дисконтной карты начинается со слова card.");
-                return null;
+                System.out.println("Вы ввели недоступный ID товара или неверный формат данных количества товара. " +
+                        "Значение дисконтной карты начинается со слова card.\n" +
+                        "ID может иметь значение от 1 до 10. Количество товара целочисленное значение. ");
+                System.exit(0);
             }
         }
         return listProducts;
@@ -129,17 +135,49 @@ public class DaoImpl implements dao{
     }
 
     /*
+    Данный метод проверяет есть ли в наличие id желаемого товар для покупателя на складе.
+    */
+    @Override
+    public boolean productAvailabilityCheck(ArrayList<Product> shoppingList, ArrayList<Product> warehouse){
+
+        boolean productAvailability = false;
+
+        for (Product product : shoppingList) {
+            int idProduct = product.getID();
+
+            for (Product product1 : warehouse) {
+                productAvailability = false;
+                if (product1.getID() == idProduct) {
+                    productAvailability = true;
+                    break;
+                }
+            }
+            if (!productAvailability){
+                System.out.println("Вы ввели недоступный ID товара или неверный формат данных количества товара.\n" +
+                        "ID может иметь значение от 1 до 10. Количество товара целочисленное значение.");
+                System.exit(0);
+                return false;
+            }
+        }
+        return productAvailability;
+    }
+
+    /*
     Метод возвращает коллекцию товаров с ценой каждого товара и общей ценой каждой позиции (учитывая количество заказов).
     */
     @Override
     public ArrayList<Product> priceProduct(ArrayList<Product> shoppingList, ArrayList<Product> warehouse) {
+
+        productAvailabilityCheck(shoppingList, warehouse);
+
         ArrayList<Product> listProductAndPrice = new ArrayList<>();
-        double priceProduct = 0;
-        double priceTotal = 0;
-        String nameProduct = null;
 
         for (Product product : shoppingList) {
             int idProduct = product.getID();
+
+            double priceProduct = 0;
+            double priceTotal = 0;
+            String nameProduct = null;
 
             for (Product product1 : warehouse) {
                 if (product1.getID()==idProduct){

@@ -11,6 +11,8 @@ public interface dao {
 
     public ArrayList<Product> shoppingList(String productLine);
 
+    public boolean productAvailabilityCheck(ArrayList<Product> shoppingList, ArrayList<Product> warehouse);
+
     public int getNumberCard(String productLine);
 
     public ArrayList<Product> priceProduct(ArrayList<Product> shoppingList, ArrayList<Product> warehouse);
