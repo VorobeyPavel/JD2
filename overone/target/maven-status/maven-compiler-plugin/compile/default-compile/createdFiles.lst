@@ -1,0 +1,6 @@
+com\overone\jd2\dto\PersonRegistration.class
+com\overone\jd2\JDBS\DataSourceCreator.class
+com\overone\jd2\test\Dao.class
+com\overone\jd2\servlet\SingUp.class
+com\overone\jd2\servlet\Authorization.class
+com\overone\jd2\test\DAOImpl.class

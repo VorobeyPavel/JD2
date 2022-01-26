@@ -11,7 +11,7 @@
 
             <!--<servlet>
                 <servlet-name>HelloServlet</servlet-name>
-                <servlet-class>by.it_academy.jd2.utils.web.HelloServlet</servlet-class>
+                <servlet-class>com.overone.jd2.utils.web.HelloServlet</servlet-class>
             </servlet>
             <servlet-mapping>
                 <servlet-name>HelloServlet</servlet-name>
