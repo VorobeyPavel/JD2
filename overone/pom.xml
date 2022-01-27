@@ -25,12 +25,12 @@
             <version>42.2.19</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>5.4.30.Final</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>com.mchange</groupId>
@@ -62,27 +62,27 @@
             <version>3.11</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>7.0.1.Final</version>
         </dependency>
+-->
 
-
-        <dependency>
+        <!--<dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.7.1</version>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
 
-        <dependency>
+       <!-- <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
             <version>5.7.1</version>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.glassfish.web</groupId>

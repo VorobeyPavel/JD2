@@ -24,7 +24,7 @@
             <h2>Форма для регистрации</h2>
             <h1>Введите свои данные</h1>
 
-        <form action="SignUp" method="get">
+        <form action="SingUp" method="get">
 
         			<input type="text" name="login" placeholder="${login}" value=""
                     required pattern="^[a-zA-Z][a-zA-Z]{2,15}$"
