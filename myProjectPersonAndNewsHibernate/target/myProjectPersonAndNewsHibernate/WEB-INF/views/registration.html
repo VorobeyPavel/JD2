@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>registration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+<!--<p th:text="'Hello, ' + ${name} + '!'" />-->
+
+<h1>Registration new user</h1>
+<form action="/myProjectPersonAndNewsHibernate_war_exploded/people/registration" method="post" >
+    <input type="text" name="name" placeholder="name" class="form-control">
+    </br>
+    <input type="text" name="surname" placeholder="surname" class="form-control">
+    </br>
+    <input type="email" name="email" placeholder="email" class="form-control">
+    </br>
+    <input type="text" name="login" placeholder="login" class="form-control">
+    </br>
+    <input type="password" name="password" placeholder="password" class="form-control">
+    </br>
+    <button type="submit" class="btn btn-success">registration</button>
+</form>
+
+
+    <br>
+    <a  th:href="'/myProjectPersonAndNewsHibernate_war_exploded/people/startPage'" class="btn btn-warning">MainPage</a>
+    <br>
+</div>
+
+</body>
+</html>

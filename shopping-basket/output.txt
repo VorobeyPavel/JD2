@@ -1,0 +1,6 @@
+{
+  "startShopping" : "2022.04.27 13:34:58",
+  "list" : null,
+  "finishShopping" : null,
+  "totalPrice" : null
+}
